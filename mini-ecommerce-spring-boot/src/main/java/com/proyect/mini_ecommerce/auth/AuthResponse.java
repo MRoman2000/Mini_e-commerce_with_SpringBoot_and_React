@@ -1,17 +1,17 @@
 package com.proyect.mini_ecommerce.auth;
 
 public class AuthResponse {
-    private  String tokem;
+    private  String token;
 
-    public AuthResponse(String tokem) {
-        this.tokem = tokem;
+    public AuthResponse(String token) {
+        this.token = token;
     }
 
-    public String getTokem() {
-        return tokem;
+    public String getToken() {
+        return token;
     }
 
-    public void setTokem(String tokem) {
-        this.tokem = tokem;
+    public void setToken(String token) {
+        this.token = token;
     }
 }
