@@ -2,16 +2,16 @@ package com.proyect.mini_ecommerce.modelo;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 public class DetallePedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer pedidos_id;
-    private Integer productos_id;
     private Integer cantidad;
-    private Integer precio_unitario;
+    private BigDecimal precio_unitario;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
@@ -25,22 +25,39 @@ public class DetallePedido {
     public DetallePedido() {
     }
 
-
-    public DetallePedido(Integer id, Integer pedidos_id, Integer productos_id, Integer cantidad, Integer precio_unitario) {
+    public DetallePedido(Integer id, Integer cantidad, BigDecimal precio_unitario, Pedido pedido, Producto producto) {
         this.id = id;
-        this.pedidos_id = pedidos_id;
-        this.productos_id = productos_id;
         this.cantidad = cantidad;
         this.precio_unitario = precio_unitario;
+        this.pedido = pedido;
+        this.producto = producto;
     }
 
-    public Integer getPrecio_unitario() {
+    public BigDecimal getPrecio_unitario() {
         return precio_unitario;
     }
 
-    public void setPrecio_unitario(Integer precio_unitario) {
+    public void setPrecio_unitario(BigDecimal precio_unitario) {
         this.precio_unitario = precio_unitario;
     }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+
 
     public Integer getCantidad() {
         return cantidad;
@@ -50,21 +67,6 @@ public class DetallePedido {
         this.cantidad = cantidad;
     }
 
-    public Integer getProductos_id() {
-        return productos_id;
-    }
-
-    public void setProductos_id(Integer productos_id) {
-        this.productos_id = productos_id;
-    }
-
-    public Integer getPedidos_id() {
-        return pedidos_id;
-    }
-
-    public void setPedidos_id(Integer pedidos_id) {
-        this.pedidos_id = pedidos_id;
-    }
 
     public Integer getId() {
         return id;

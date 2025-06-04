@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
+import { useAuth } from '../context/AuthContext';
+
 export default function Navbar() {
-
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-
-
-    useEffect(() => {
-        const onLogin = () => {
-            setIsLoggedIn(!!localStorage.getItem('token'));
-        };
-
-        window.addEventListener('login', onLogin);
-
-        return () => {
-            window.removeEventListener('login', onLogin);
-        };
-    }, []);
+    const { user } = useAuth();
 
 
     return (
@@ -32,33 +19,24 @@ export default function Navbar() {
                         <NavLink to="/productos" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
                             Productos
                         </NavLink>
+
                     </li>
-                    {isLoggedIn && (
+
+                    {user && (
+
                         <li>
-                            <NavLink to="/usuario" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-                                Perfil de Usuario
-                            </NavLink>
+                            <NavLink to="/usuario" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} >Perfil de Usuario</NavLink>
+                            <NavLink to="/cesta" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} >Cesta</NavLink>
+
                         </li>
+
                     )}
 
-                    {!isLoggedIn ? (
-                        <li>
-                            <NavLink to="/login" className="nav-link">Login</NavLink>
-                        </li>
-                    ) : (
-                        <li>
-                            <button
-                                onClick={() => {
-                                    localStorage.removeItem('token');
-                                    setIsLoggedIn(false);
-                                    window.location.href = '/login';
-                                }}
-                                className="nav-link"
-                            >
-                                Cerrar sesión
-                            </button>
-                        </li>
+
+                    {!user && (
+                        <li><NavLink to="/login" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Login</NavLink></li>
                     )}
+
                 </ul>
             </nav>
 

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #ec7979;
+    background-color: #d8e9ff;
 }
 
 .usuario-info {
@@ -13,4 +13,16 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 400px;
+}
+.btn-logout {
+    margin: 20px;
+    background-color: #b9b9b9;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #ec7979;
+    
+}
+
+.btn-logout:hover {
+    background-color: #f7caca;
 }

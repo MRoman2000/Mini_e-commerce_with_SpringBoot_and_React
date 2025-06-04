@@ -1,0 +1,44 @@
+package com.proyect.mini_ecommerce.controller;
+
+
+import com.proyect.mini_ecommerce.dto.AgregarCarritoRequest;
+import com.proyect.mini_ecommerce.modelo.Carrito;
+import com.proyect.mini_ecommerce.modelo.Usuario;
+import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
+import com.proyect.mini_ecommerce.service.ServicioCarrito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequestMapping("/api/carrito")
+@CrossOrigin("http://localhost:3000")
+@RestController
+public class ControladorCarrito {
+
+    @Autowired
+    private ServicioCarrito servicioCarrito;
+
+    @Autowired
+    private RepositorioUsuario repositorioUsuario;
+
+    @GetMapping
+    private List<Carrito> listCarrito() {
+        return servicioCarrito.listarCarrito();
+    }
+
+
+    @PostMapping
+    public void agregarCarrito(@RequestBody AgregarCarritoRequest request,
+                               @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = userDetails.getUsername();
+        Usuario usuario = repositorioUsuario.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        servicioCarrito.agregarProductoACarrito(usuario.getId(), request.getProductoId(), request.getCantidad());
+    }
+
+}

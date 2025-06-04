@@ -2,6 +2,7 @@ package com.proyect.mini_ecommerce.modelo;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Producto {
     private Integer id;
     private String nombre;
     private String descripcion;
-    private Double precio;
+    private BigDecimal precio;
     private Integer stock;
     private String imagenUrl;
 
@@ -24,7 +25,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, Double precio, Integer stock, String imagenUrl) {
+    public Producto(String nombre, String descripcion,BigDecimal precio, Integer stock, String imagenUrl) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -56,11 +57,11 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public Double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
