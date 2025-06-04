@@ -2,6 +2,7 @@ package com.proyect.mini_ecommerce.controller;
 
 
 import com.proyect.mini_ecommerce.dto.AgregarCarritoRequest;
+import com.proyect.mini_ecommerce.dto.CarritoItemDTO;
 import com.proyect.mini_ecommerce.modelo.Carrito;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
@@ -25,10 +26,10 @@ public class ControladorCarrito {
     private RepositorioUsuario repositorioUsuario;
 
     @GetMapping
-    private List<Carrito> listCarrito() {
-        return servicioCarrito.listarCarrito();
+    public List<CarritoItemDTO> obtenerCarrito(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        return servicioCarrito.obtenerCarritoPorUsuario(username);
     }
-
 
     @PostMapping
     public void agregarCarrito(@RequestBody AgregarCarritoRequest request,

@@ -2,7 +2,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext'; // donde tengas el token
 import './Cesta.css';
 import { crearPedido } from '../service/PedidoService';
-
+import { obtenerCarrito, agregarProductoCarrito } from '../service/CarritoService'; // importa tus funciones
 
 export default function Cesta() {
     const { cartItems, removeFromCart, clearCart } = useCart();

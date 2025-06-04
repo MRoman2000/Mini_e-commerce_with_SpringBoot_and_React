@@ -1,10 +1,12 @@
 package com.proyect.mini_ecommerce.service;
 
+import com.proyect.mini_ecommerce.dto.CarritoItemDTO;
 import com.proyect.mini_ecommerce.modelo.Carrito;
 import com.proyect.mini_ecommerce.modelo.CarritoItem;
 import com.proyect.mini_ecommerce.modelo.Producto;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioCarrito;
+import com.proyect.mini_ecommerce.repository.RepositorioCarritoItem;
 import com.proyect.mini_ecommerce.repository.RepositorioProducto;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicioCarrito implements IServicioCarrito {
@@ -26,6 +29,9 @@ public class ServicioCarrito implements IServicioCarrito {
 
     @Autowired
     private RepositorioProducto repositorioProducto;
+
+    @Autowired
+    private RepositorioCarritoItem repositorioCarritoItem;
 
     @Override
     public List<Carrito> listarCarrito() {
@@ -63,4 +69,23 @@ public class ServicioCarrito implements IServicioCarrito {
 
         repositorioCarrito.save(carrito);
     }
+
+    @Override
+    public List<CarritoItemDTO> obtenerCarritoPorUsuario(String username) {
+        Usuario usuario = repositorioUsuario.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        List<CarritoItem> carritoItems = repositorioCarritoItem.findByCarritoUsuarioId(usuario.getId());
+        return carritoItems.stream()
+                .map(item -> new CarritoItemDTO(
+                        item.getProducto().getId(),
+                        item.getProducto().getNombre(),
+                        item.getProducto().getDescripcion(),
+                        item.getProducto().getPrecio(),
+                        item.getCantidad(),
+                        item.getProducto().getImagenUrl()
+                ))
+                .collect(Collectors.toList());
+    }
+
 }
