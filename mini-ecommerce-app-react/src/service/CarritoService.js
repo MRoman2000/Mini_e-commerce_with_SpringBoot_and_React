@@ -31,20 +31,17 @@ export async function obtenerCarrito(token) {
 }
 
 
-export async function eliminarCarrito(id, token) {
+export async function eliminarCarrito(token) {
   try {
-    await axios.delete(`${API_URL}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+    const response = await axios.delete(API_URL, {
+      headers: { Authorization: `Bearer ${token}` }
     });
-    console.log(id);
+    return response.data;
   } catch (error) {
-    console.error('Error eliminando carrito', error);
+    console.error('Error eliminando carrito:', error);
     throw error;
   }
 }
-
 
 export async function eliminarItemCarrito(productoId, token) {
   await axios.delete(`${API_URL}/item/${productoId}`, {

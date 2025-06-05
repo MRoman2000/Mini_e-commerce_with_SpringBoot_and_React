@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public class CarritoItemDTO {
     private  Integer id;
-    private Integer carritoId;
     private Integer productoId;
     private String nombre;
     private String descripcion;
@@ -15,9 +14,9 @@ public class CarritoItemDTO {
     // Constructor vacío (requerido para Jackson)
     public CarritoItemDTO() {}
 
-    public CarritoItemDTO(Integer id, Integer carritoId, Integer productoId, String nombre, String descripcion, BigDecimal precio, Integer cantidad, String imagenUrl) {
+    public CarritoItemDTO(Integer id, Integer productoId, String nombre, String descripcion, BigDecimal precio, Integer cantidad, String imagenUrl) {
         this.id = id;
-        this.carritoId = carritoId;
+
         this.productoId = productoId;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -28,14 +27,6 @@ public class CarritoItemDTO {
 
     public Integer getId() {
         return id;
-    }
-
-    public Integer getCarritoId() {
-        return carritoId;
-    }
-
-    public void setCarritoId(Integer carritoId) {
-        this.carritoId = carritoId;
     }
 
     public void setId(Integer id) {

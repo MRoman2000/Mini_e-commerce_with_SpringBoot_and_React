@@ -66,6 +66,7 @@ export default function Cesta() {
                     ))}
                     <div className="carrito-total">
                         <h3>Total: {calcularTotal().toFixed(2)} €</h3>
+                        
                         <button className="btn-vaciar" onClick={clearCart}>
                             Vaciar carrito
                         </button>

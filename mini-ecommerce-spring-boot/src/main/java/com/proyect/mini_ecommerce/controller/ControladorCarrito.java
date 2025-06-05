@@ -43,12 +43,12 @@ public class ControladorCarrito {
         servicioCarrito.agregarProductoACarrito(usuario.getId(), request.getProductoId(), request.getCantidad());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarCarrito(@PathVariable Integer id) {
-        servicioCarrito.eliminarCarrito(id);
-        return ResponseEntity.ok("Carrito eliminado");
+    @DeleteMapping()
+    public ResponseEntity<?> eliminarCarritoDelUsuario(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        servicioCarrito.eliminarCarritoPorUsuario(username);
+        return ResponseEntity.ok("Carrito del usuario eliminado correctamente.");
     }
-
 
     @DeleteMapping("/item/{id}")
     public ResponseEntity<?> eliminarItemDelCarrito(@PathVariable Integer id) {
