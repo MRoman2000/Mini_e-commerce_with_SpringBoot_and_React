@@ -1,8 +1,8 @@
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext'; // donde tengas el token
-import './Cesta.css';
 import { crearPedido } from '../service/PedidoService';
-import { obtenerCarrito, agregarProductoCarrito } from '../service/CarritoService'; // importa tus funciones
+
+import './Cesta.css';
 
 export default function Cesta() {
     const { cartItems, removeFromCart, clearCart } = useCart();
@@ -19,9 +19,7 @@ export default function Cesta() {
                 productoId: item.producto.id,
                 cantidad: item.cantidad
             }));
-
             await crearPedido(productosParaEnviar, token);
-
             alert('Pedido enviado correctamente');
             clearCart();
         } catch (error) {
@@ -56,7 +54,7 @@ export default function Cesta() {
                             <div className='container-btn-eliminar'>
                                 <button
                                     className="btn-eliminar"
-                                    onClick={() => removeFromCart(item.producto.id)}
+                                    onClick={() =>  removeFromCart(item.id)}
                                 >
                                     Eliminar
                                 </button>

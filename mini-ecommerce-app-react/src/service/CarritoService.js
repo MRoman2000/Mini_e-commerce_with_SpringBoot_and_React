@@ -1,11 +1,12 @@
 import axios from "axios";
 
+
 const API_URL = 'http://localhost:8080/api/carrito';
 
 export async function agregarProductoCarrito(productoId, cantidad, token) {
   try {
-    const response = await axios.post(API_URL, 
-      { productoId, cantidad }, 
+    const response = await axios.post(API_URL,
+      { productoId, cantidad },
       { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data;
@@ -20,9 +21,33 @@ export async function obtenerCarrito(token) {
     const response = await axios.get(API_URL, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    return response.data; // aquí tu backend debe devolver el carrito con productos y cantidades
+     
+    return response.data;
+  
   } catch (error) {
     console.error('Error obteniendo carrito', error);
     throw error;
   }
+}
+
+
+export async function eliminarCarrito(id, token) {
+  try {
+    await axios.delete(`${API_URL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    console.log(id);
+  } catch (error) {
+    console.error('Error eliminando carrito', error);
+    throw error;
+  }
+}
+
+
+export async function eliminarItemCarrito(productoId, token) {
+  await axios.delete(`${API_URL}/item/${productoId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
 }

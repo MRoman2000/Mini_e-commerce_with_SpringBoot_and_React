@@ -3,8 +3,6 @@ import { getProductos } from '../service/ProductosService';
 import { useCart } from '../context/CartContext';
 import './Productos.css';
 
-
-
 export default function Productos() {
     const [productos, setProductos] = useState([]);
     const { addToCart } = useCart();
@@ -43,7 +41,7 @@ export default function Productos() {
                                 <h2 className="product-name" >{producto.nombre}</h2>
                                 <p className="product-description">{producto.descripcion}</p>
                                 <p className="product-price"> $ {producto.precio}</p>
-                                <button className="btn-add-cart" onClick={() => addToCart(producto)}>
+                                <button className="btn-add-cart" onClick={() => addToCart(producto) }>
                                     Añadir al carrito
                                 </button>
                             </li>

@@ -9,7 +9,7 @@ export default function Login() {
         username: '',
         password: ''
     });
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const formSubmit = async (e) => {
         e.preventDefault();
@@ -17,11 +17,11 @@ export default function Login() {
             const response = await login(user); // login debe devolver algo
 
             console.log('Respuesta del login:', response); // Muestra la respuesta completa
-       
+
             if (response.token) {
                 console.log('Token recibido:', response.token); // Muestra el token
                 localStorage.setItem('token', response.token);
-            window.dispatchEvent(new Event('login'));
+                window.dispatchEvent(new Event('login'));
                 navigate('/usuario');
             }
 

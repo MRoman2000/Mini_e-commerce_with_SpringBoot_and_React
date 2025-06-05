@@ -8,6 +8,7 @@ import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.service.ServicioCarrito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,19 @@ public class ControladorCarrito {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         servicioCarrito.agregarProductoACarrito(usuario.getId(), request.getProductoId(), request.getCantidad());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarCarrito(@PathVariable Integer id) {
+        servicioCarrito.eliminarCarrito(id);
+        return ResponseEntity.ok("Carrito eliminado");
+    }
+
+
+    @DeleteMapping("/item/{id}")
+    public ResponseEntity<?> eliminarItemDelCarrito(@PathVariable Integer id) {
+        servicioCarrito.eliminarItemCarrito(id);
+        return ResponseEntity.ok().build();
     }
 
 }

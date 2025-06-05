@@ -5,7 +5,7 @@ public class ProductoCantidadDTO {
     private Integer productoId;
     private Integer cantidad;
 
-    // Constructor vacío para frameworks (Jackson)
+
     public ProductoCantidadDTO() {
     }
 

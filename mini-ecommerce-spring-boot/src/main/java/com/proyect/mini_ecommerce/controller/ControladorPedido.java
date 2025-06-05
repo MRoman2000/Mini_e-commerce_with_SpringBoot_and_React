@@ -1,8 +1,7 @@
 package com.proyect.mini_ecommerce.controller;
 
-import com.proyect.mini_ecommerce.dto.CrearPedidoRequest;
+import com.proyect.mini_ecommerce.dto.PedidoDTO;
 import com.proyect.mini_ecommerce.dto.ProductoCantidadDTO;
-import com.proyect.mini_ecommerce.modelo.Pedido;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.service.ServicioPedido;
@@ -34,6 +33,18 @@ public class ControladorPedido {
 
         servicioPedido.crearPedido(usuario.getId(), productos);
         return ResponseEntity.ok("Pedido creado correctamente.");
+    }
+
+    @GetMapping("/pedidos")
+    public ResponseEntity<List<PedidoDTO>> obtenerPedidosUsuario(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+
+        Usuario usuario = repositorioUsuario.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        List<PedidoDTO> pedidos = servicioPedido.obtenerPedidosConDetallesPorUsuario(usuario.getId());
+
+        return ResponseEntity.ok(pedidos);
     }
 
 }

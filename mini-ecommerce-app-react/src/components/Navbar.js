@@ -23,13 +23,24 @@ export default function Navbar() {
                     </li>
 
                     {user && (
-
-                        <li>
-                            <NavLink to="/usuario" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} >Perfil de Usuario</NavLink>
-                            <NavLink to="/cesta" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} >Cesta</NavLink>
-
-                        </li>
-
+                        <>
+                            <li>
+                                <NavLink
+                                    to="/usuario"
+                                    className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                                >
+                                    Perfil de Usuario
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/cesta"
+                                    className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                                >
+                                    Cesta
+                                </NavLink>
+                            </li>
+                        </>
                     )}
 
 

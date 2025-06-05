@@ -13,3 +13,13 @@ export async function crearPedido(productos, token) {
     });
     return response.data;
 }
+
+export async function obtenerPedidos(token) {
+    const response = await axios.get(API_URL, {
+         headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    return response.data;
+}

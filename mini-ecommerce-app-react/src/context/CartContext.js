@@ -1,30 +1,90 @@
-// src/context/CartContext.js
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { obtenerCarrito, agregarProductoCarrito, eliminarCarrito, eliminarItemCarrito } from '../service/CarritoService';
+import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+    const { token } = useAuth();
     const [cartItems, setCartItems] = useState([]);
 
-    const addToCart = (producto, cantidad = 1) => {
-        setCartItems(prev => {
-            const existente = prev.find(item => item.producto.id === producto.id);
-            if (existente) {
-                return prev.map(item =>
-                    item.producto.id === producto.id
-                        ? { ...item, cantidad: item.cantidad + cantidad }
-                        : item
-                );
-            }
-            return [...prev, { producto, cantidad }];
-        });
+    useEffect(() => {
+        if (token) {
+            obtenerCarrito(token)
+                .then(data => {
+                    const carritoFormateado = data.map(item => ({
+                        id: item.id, 
+                        carritoId: item.carritoId,
+                        producto: {
+                            id: item.productoId,
+                            nombre: item.nombre,
+                            descripcion: item.descripcion,
+                            precio: item.precio,
+                            imagenUrl: item.imagenUrl,
+                        },
+                        cantidad: item.cantidad
+                    }));
+
+                    setCartItems(carritoFormateado);
+                })
+                .catch(console.error);
+
+        } else {
+            setCartItems([]);
+        }
+    }, [token]);
+
+    const addToCart = async (producto, cantidad = 1) => {
+        if (!token) {
+            alert("Debes iniciar sesión para agregar productos al carrito");
+            return;
+        }
+
+        try {
+            // Llamada backend para añadir producto y cantidad
+            await agregarProductoCarrito(producto.id, cantidad, token);
+            // Actualizar estado local sincronizando cantidades
+            setCartItems(prev => {
+                const existente = prev.find(item => item.producto.id === producto.id);
+                if (existente) {
+                    return prev.map(item =>
+                        item.producto.id === producto.id
+                            ? { ...item, cantidad: item.cantidad + cantidad }
+                            : item
+                    );
+                }
+                return [...prev, { producto, cantidad }];
+            });
+
+        } catch (error) {
+            console.error("Error agregando producto al carrito backend", error);
+            alert("No se pudo agregar el producto al carrito");
+        }
     };
 
-    const removeFromCart = (productoId) => {
-        setCartItems(prev => prev.filter(item => item.producto.id !== productoId));
+    const removeFromCart = async (itemId) => {
+        try {
+            await eliminarItemCarrito(itemId, token); 
+            setCartItems(prev => prev.filter(item => item.id !== itemId)); 
+        } catch (error) {
+            console.error("Error eliminando el producto del carrito", error);
+        }
     };
 
-    const clearCart = () => setCartItems([]);
+const clearCart = async () => {
+    if (cartItems.length === 0) return;
+
+    try {
+        const carritoId = cartItems[0].carritoId; 
+        await eliminarCarrito(carritoId, token);
+        setCartItems([]);
+    } catch (error) {
+        console.error("Error eliminando el carrito", error);
+    }
+};
+
+
+
 
     return (
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>

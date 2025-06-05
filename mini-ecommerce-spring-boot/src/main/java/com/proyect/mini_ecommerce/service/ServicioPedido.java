@@ -1,5 +1,7 @@
 package com.proyect.mini_ecommerce.service;
 
+import com.proyect.mini_ecommerce.dto.DetallePedidoDTO;
+import com.proyect.mini_ecommerce.dto.PedidoDTO;
 import com.proyect.mini_ecommerce.dto.ProductoCantidadDTO;
 import com.proyect.mini_ecommerce.modelo.DetallePedido;
 import com.proyect.mini_ecommerce.modelo.Pedido;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,6 @@ public class ServicioPedido implements IServicioPedido {
             // Actualizar stock
             producto.setStock(producto.getStock() - pc.getCantidad());
             repositorioProducto.save(producto);
-
             DetallePedido detalle = new DetallePedido();
             detalle.setProducto(producto);
             detalle.setCantidad(pc.getCantidad());
@@ -71,4 +71,35 @@ public class ServicioPedido implements IServicioPedido {
         repositorioPedido.save(pedido);
 
     }
+
+    public List<PedidoDTO> obtenerPedidosConDetallesPorUsuario(Integer usuarioId) {
+        List<Pedido> pedidos = repositorioPedido.findByUsuarioId(usuarioId);
+        List<PedidoDTO> pedidosDTO = new ArrayList<>();
+
+        for (Pedido pedido : pedidos) {
+            List<DetallePedidoDTO> detalleDTOs = new ArrayList<>();
+            for (DetallePedido detalle : pedido.getDetallePedidos()) {
+                String nombreProducto = detalle.getProducto().getNombre();
+                int cantidad = detalle.getCantidad();
+                BigDecimal precioUnitario = detalle.getPrecio_unitario();
+                String imagenUrl = detalle.getProducto().getImagenUrl();
+
+                DetallePedidoDTO detalleDTO = new DetallePedidoDTO(nombreProducto, cantidad, precioUnitario,imagenUrl);
+                detalleDTOs.add(detalleDTO);
+            }
+
+            PedidoDTO pedidoDTO = new PedidoDTO(
+                    pedido.getId(),
+                    pedido.getFecha(),
+                    pedido.getTotal(),
+                    detalleDTOs
+            );
+
+            pedidosDTO.add(pedidoDTO);
+        }
+
+        return pedidosDTO;
+    }
+
+
 }

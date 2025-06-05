@@ -78,6 +78,8 @@ public class ServicioCarrito implements IServicioCarrito {
         List<CarritoItem> carritoItems = repositorioCarritoItem.findByCarritoUsuarioId(usuario.getId());
         return carritoItems.stream()
                 .map(item -> new CarritoItemDTO(
+                        item.getId(),
+                        item.getCarrito().getId(),
                         item.getProducto().getId(),
                         item.getProducto().getNombre(),
                         item.getProducto().getDescripcion(),
@@ -87,5 +89,16 @@ public class ServicioCarrito implements IServicioCarrito {
                 ))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void eliminarCarrito(Integer id) {
+        repositorioCarrito.deleteById(id);
+    }
+
+    @Override
+    public void eliminarItemCarrito(Integer id) {
+        repositorioCarritoItem.deleteById(id);
+    }
+
 
 }
