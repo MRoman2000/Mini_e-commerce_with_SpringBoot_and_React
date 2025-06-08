@@ -2,14 +2,14 @@
     padding: 2rem;
     max-width: 900px;
     margin: 0 auto;
-    background: #ffffff;
+    background-color: #ffffff63;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     animation: fadeSlideUp 0.7s ease forwards;
 }
 
 .btn-confirmar {
-   background-color: #012c57;
+    background-color: #012c57;
     color: white;
     margin-top: 40px;
     padding: 10px 20px;
@@ -19,6 +19,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 .carrito-titulo {
     font-size: 2rem;
     text-align: center;
@@ -41,7 +42,7 @@
 .carrito-item {
     display: flex;
     gap: 20px;
-    background-color: #f0f0f0;
+      background-color: #ffffff63;
     padding: 1rem;
     border-radius: 12px;
     align-items: center;
@@ -60,20 +61,23 @@
     border-radius: 10px;
     object-fit: cover;
 }
+
 .carrito-detalles {
     flex: 1;
     text-align: left;
 }
+
 .carrito-detalles h3 {
     justify-content: flex-start;
     margin: 0 0 5px;
     font-size: 1.2rem;
-    color: #34495e;
+    color: #3d3d3d;
 }
 
 .carrito-detalles p {
     margin: 5px 0;
-    color: #3b3939;
+    font-style: bold;
+    color: #3a3a3a;
 }
 
 .btn-eliminar {

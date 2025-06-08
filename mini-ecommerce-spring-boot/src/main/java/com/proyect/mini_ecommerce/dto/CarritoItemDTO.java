@@ -16,7 +16,6 @@ public class CarritoItemDTO {
 
     public CarritoItemDTO(Integer id, Integer productoId, String nombre, String descripcion, BigDecimal precio, Integer cantidad, String imagenUrl) {
         this.id = id;
-
         this.productoId = productoId;
         this.nombre = nombre;
         this.descripcion = descripcion;

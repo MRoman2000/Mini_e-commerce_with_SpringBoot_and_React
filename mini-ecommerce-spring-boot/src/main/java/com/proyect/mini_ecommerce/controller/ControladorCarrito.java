@@ -1,9 +1,7 @@
 package com.proyect.mini_ecommerce.controller;
 
-
 import com.proyect.mini_ecommerce.dto.AgregarCarritoRequest;
 import com.proyect.mini_ecommerce.dto.CarritoItemDTO;
-import com.proyect.mini_ecommerce.modelo.Carrito;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.service.ServicioCarrito;

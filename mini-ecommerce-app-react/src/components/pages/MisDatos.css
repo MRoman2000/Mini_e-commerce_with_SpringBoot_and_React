@@ -1,0 +1,79 @@
+.usuario-editar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.conteiner-usuario {
+    background-color: #ffffff63;
+    border-radius: 15px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.usuario-info {
+    padding: 20px;
+    border-radius: 15px;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.form-editar {
+    background-color: #ffffff63;
+    backdrop-filter: blur(8px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-editar h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.form-editar input {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.8rem;
+    font-size: 1rem;
+    transition: border 0.2s ease;
+}
+
+.form-editar input:focus {
+    border-color: #0077ff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.2);
+}
+
+.form-editar button {
+    padding: 0.8rem 1rem;
+    background: #0077ff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-editar button:hover {
+    background: #005fd4;
+}
+
+.form-editar .error {
+    color: #d32f2f;
+    background-color: #fdecea;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+}

@@ -81,8 +81,6 @@ const clearCart = async () => {
 };
 
 
-
-
     return (
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
             {children}

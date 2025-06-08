@@ -1,62 +1,83 @@
-.login-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #ec7979;
+.login-container {
+  max-width: 400px;
+  margin: 5% auto;
+  padding: 2rem;
+  background: rgba(0, 51, 94, 0.473);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif; /* Fuente estilo futurista */
 }
 
-.login-form {
-    background-color: #f7caca;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 400px;
-}
-.form-group {
-    margin-bottom: 15px;
-
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
+.login-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff;
 }
 
-.form-group input {
-    width: 80%;
-    padding: 7px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 16px;
+.login-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 0 5px #00f0ff;
+  transition: box-shadow 0.3s ease;
+}
+
+.login-form input:focus {
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
 }
 
 .form-button {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
+
+.btn-login,
+.btn-register {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  color: #fff;
+}
+
 .btn-login {
-    background-color: #eb4a4a;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 50%;
+  background: linear-gradient(to right, #1e850a, #2c5364);
+}
+
+.btn-login:hover {
+  background: linear-gradient(to right, #2b9664, #203a43);
+  transform: scale(1.05);
 }
 
 .btn-register {
-    background-color: #00b82e;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 50%;
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+}
+
+.btn-register:hover {
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+  transform: scale(1.05);
 }

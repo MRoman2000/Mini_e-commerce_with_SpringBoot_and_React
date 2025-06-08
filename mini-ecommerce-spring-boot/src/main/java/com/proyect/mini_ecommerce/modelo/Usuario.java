@@ -15,7 +15,6 @@ public class Usuario {
     private  String email;
     private  String password;
     private  String rol;
-
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Pedido> pedidos = new ArrayList<>();
 

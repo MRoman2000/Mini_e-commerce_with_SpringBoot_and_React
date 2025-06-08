@@ -1,0 +1,99 @@
+
+
+.registro-container {
+    margin: 0;
+    padding: 0;
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registro-form {
+    max-width: 400px;
+    margin: 5% auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.registro-form h2 {
+    text-align: center;
+    color: #00ffff;
+}
+
+.registro-form input {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.registro-form input:focus {
+    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}
+
+.input-password-container {
+    position: relative;
+}
+
+.ver-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.botones-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-registrarse,
+.btn-login {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-registrarse {
+    background-color: #00ffff;
+    color: #000;
+}
+
+.btn-registrarse:hover {
+    background-color: #00bcbc;
+}
+
+.btn-login {
+    background-color: #555;
+    color: white;
+}
+
+.btn-login:hover {
+    background-color: #777;
+}

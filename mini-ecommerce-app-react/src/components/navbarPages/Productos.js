@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { getProductos } from '../service/ProductosService';
-import { useCart } from '../context/CartContext';
+import { useEffect, useState } from 'react'
+import { getProductos } from '../../service/ProductosService';
+import { useCart } from '../../context/CartContext';
 import './Productos.css';
 
 export default function Productos() {
