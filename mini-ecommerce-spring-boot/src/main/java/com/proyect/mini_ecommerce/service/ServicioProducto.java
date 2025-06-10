@@ -48,4 +48,9 @@ public class ServicioProducto implements IServicioProducto {
 
         return repositorioProducto.save(buscarProducto);
     }
+
+    @Override
+    public List<Producto> findByNombre(String nombre) {
+        return repositorioProducto.findByNombreContainingIgnoreCase(nombre);
+    }
 }

@@ -33,12 +33,8 @@ public class AuthController {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
-        // Carga detalles del usuario
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-
-        // Genera el token
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String token = jwtUtil.generateToken(userDetails.getUsername());
-
         return ResponseEntity.ok(new AuthResponse(token));
     }
 }

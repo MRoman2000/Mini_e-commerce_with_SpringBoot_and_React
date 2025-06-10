@@ -42,8 +42,6 @@ export default function Navbar() {
                             </li>
                         </>
                     )}
-
-
                     {!user && (
                         <li><NavLink to="/login" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Login</NavLink></li>
                     )}

@@ -4,7 +4,6 @@ import com.proyect.mini_ecommerce.dto.UserDto;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,17 +35,7 @@ public class ServicioUsuario implements IServicioUsuario {
         String rawPassword = usuario.getPassword();
         usuario.setPassword(passwordEncoder.encode(rawPassword));
         Usuario guardado = repositorioUsuario.save(usuario);
-        return new UserDto(guardado.getUsername(), guardado.getEmail(), guardado.getRol());
-    }
-
-
-    public UserDto findByUsername(String username) {
-        Usuario user = repositorioUsuario.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-        UserDto userDto = new UserDto();
-        userDto.setUsername(user.getUsername());
-        userDto.setEmail(user.getEmail());
-        userDto.setRol(user.getRol());
-        return userDto;
+        return new UserDto(guardado.getId(), guardado.getUsername(), guardado.getEmail(), guardado.getRol());
     }
 
     @Override
@@ -59,26 +48,25 @@ public class ServicioUsuario implements IServicioUsuario {
         repositorioUsuario.deleteById(id);
     }
 
+
+
     @Override
-    public UserDto actualizarUsuario(Integer id, Usuario usuarioNuevo) {
+    public Usuario actualizarUsuario(Integer id, Usuario usuarioActualizar) {
         Usuario usuarioExistente = repositorioUsuario.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        usuarioExistente.setUsername(usuarioNuevo.getUsername());
 
-        if (usuarioNuevo.getPassword() != null && !usuarioNuevo.getPassword().isEmpty()) {
-            String encodedPassword = passwordEncoder.encode(usuarioNuevo.getPassword());
+
+        usuarioExistente.setUsername(usuarioActualizar.getUsername());
+        usuarioExistente.setEmail(usuarioActualizar.getEmail());
+        if (usuarioActualizar.getPassword() != null && !usuarioActualizar.getPassword().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(usuarioActualizar.getPassword());
             usuarioExistente.setPassword(encodedPassword);
         }
 
-        Usuario usuarioActualizado = repositorioUsuario.save(usuarioExistente);
+        return repositorioUsuario.save(usuarioExistente);
 
-        // Devuelve un DTO construido a partir del usuario actualizado
-        UserDto dto = new UserDto();
-        dto.setUsername(usuarioActualizado.getUsername());
-        dto.setEmail((usuarioActualizado.getEmail()));
-        // No devuelvas la contraseña en el DTO por seguridad
-
-        return dto;
     }
+
+
 }

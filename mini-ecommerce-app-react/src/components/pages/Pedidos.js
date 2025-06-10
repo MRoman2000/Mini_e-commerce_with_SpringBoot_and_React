@@ -22,7 +22,7 @@ export default function Pedidos() {
     }
   };
 
- return (
+  return (
     <div className="pedidos-container">
       <h2>Mis Pedidos</h2>
 
@@ -33,11 +33,11 @@ export default function Pedidos() {
           <div key={pedido.id} className="pedido-card">
             <div className="pedido-info">
               <p><strong>Fecha:</strong> {new Date(pedido.fecha).toLocaleString()}</p>
-             
+
             </div>
 
             <div>
-          
+
               <ul className="detalles-list">
                 {pedido.detalles.map((detalle, index) => (
                   <li key={index} className="detalle-item">
@@ -52,7 +52,7 @@ export default function Pedidos() {
                 ))}
               </ul>
             </div>
-                <p><strong>Total:</strong> {pedido.total.toFixed(2)} €</p>
+            <p><strong>Total:</strong> {pedido.total.toFixed(2)} €</p>
           </div>
         ))
       )}

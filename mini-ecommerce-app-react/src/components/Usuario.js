@@ -7,6 +7,7 @@ export default function Usuario() {
         <div className="container-principal">
             <h1>Perfil de Usuario</h1>
             <div className="layout-usuario">
+                
                 <aside className="sidebar-usuario">
                     <ul className="lista-lateral">
                         <Link to="mis-datos">
@@ -18,14 +19,17 @@ export default function Usuario() {
                         <Link to="lista-deseos">
                             <li>Lista de deseos</li>
                         </Link>
+
+                        <Link to="admin">
+                            <li>Admin Page</li>
+                        </Link>
                     </ul>
                 </aside>
-
-
                 <main className="contenido-usuario">
                     <Outlet /> {/* Aquí se renderiza el contenido dinámico */}
                 </main>
             </div>
+
         </div>
     );
 }

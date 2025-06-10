@@ -41,7 +41,7 @@ public class ControladorCarrito {
         servicioCarrito.agregarProductoACarrito(usuario.getId(), request.getProductoId(), request.getCantidad());
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     public ResponseEntity<?> eliminarCarritoDelUsuario(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
         servicioCarrito.eliminarCarritoPorUsuario(username);

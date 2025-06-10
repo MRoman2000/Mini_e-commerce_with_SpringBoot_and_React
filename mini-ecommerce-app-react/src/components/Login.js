@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import './Login.css'
-
+import { useState } from 'react'
 import { login } from '../service/AuthService';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'
+
+
 export default function Login() {
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -16,11 +17,7 @@ export default function Login() {
         e.preventDefault();
         try {
             const response = await login(user);
-
-            console.log('Respuesta del login:', response); // Muestra la respuesta completa
-
             if (response.token) {
-                console.log('Token recibido:', response.token); // Muestra el token
                 localStorage.setItem('token', response.token);
                 window.dispatchEvent(new Event('login'));
                 navigate('/usuario');

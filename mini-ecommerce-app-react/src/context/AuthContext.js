@@ -1,21 +1,21 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { obtenerDatos } from '../service/AuthService';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const navigate = useNavigate();
     const [user, setUser] = useState(() => {
-        const saved = localStorage.getItem('user');
-        return saved ? JSON.parse(saved) : null;
+      //  const saved = localStorage.getItem('user');
+     //   return saved ? JSON.parse(saved) : null;
     });
 
     const token = localStorage.getItem('token');
 
     const logout = useCallback(() => {
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
+      //  localStorage.removeItem('user');
         setUser(null);
         navigate('/login');
     }, [navigate]);
@@ -23,16 +23,15 @@ export function AuthProvider({ children }) {
     const loadUser = useCallback(async () => {
         if (!token) return;
         try {
-            const response = await axios.get('http://localhost:8080/api/usuarios/me', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await obtenerDatos(token);
             setUser(response.data);
+            console.log(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
         } catch (err) {
             console.error("Error al cargar el usuario:", err);
             logout();
         }
-    }, [token, logout]); // <<--- ahora logout está definido antes, así no hay warning
+    }, [token, logout]);
 
     useEffect(() => {
         if (token && !user) {

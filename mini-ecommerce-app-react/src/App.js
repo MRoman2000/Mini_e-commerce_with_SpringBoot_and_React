@@ -12,34 +12,42 @@ import ListaDeseos from './components/pages/ListaDeseos';
 import MisDatos from './components/pages/MisDatos';
 import { Navigate } from "react-router-dom";
 import Register from './components/pages/Register';
+import Admin from './components/navbarPages/Admin';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/productos" element={<Productos />} />
-        <Route path="/login" element={<Login />} />
-        <Route path='/cesta' element={<Cesta />} />
-        <Route path='/register' element = {<Register/>} />
+      <QueryClientProvider client={queryClient}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/productos" element={<Productos />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cesta" element={<Cesta />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/usuario"
-          element={
-            <ProtectedRoute>
-              <Usuario />
-            </ProtectedRoute>
-          }
-        >
-          {/* Subrutas anidadas */}
-          <Route index element={<Navigate to="mis-datos" replace />} />
-          <Route path="mis-datos" element={<MisDatos />} />
-          <Route path="pedidos" element={<Pedidos />} />
-          <Route path="lista-deseos" element={<ListaDeseos />} />
+          <Route
+            path="/usuario"
+            element={
+              <ProtectedRoute>
+                <Usuario />
+              </ProtectedRoute>
+            }
+          >
+            {/* Subrutas anidadas */}
+            <Route index element={<Navigate to="mis-datos" replace />} />
+            <Route path="mis-datos" element={<MisDatos />} />
+            <Route path="pedidos" element={<Pedidos />} />
+            <Route path="lista-deseos" element={<ListaDeseos />} />
+            <Route path="admin" element={<ProtectedRoute requiredRole="ADMIN"><Admin />
+            </ProtectedRoute>} />
 
-          
-        </Route>
-      </Routes>
+          </Route>
+        </Routes>
+      </QueryClientProvider>
     </div>
   );
 }

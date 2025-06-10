@@ -16,15 +16,22 @@ public class ControladorProducto {
     private ServicioProducto servicioProducto;
 
     @GetMapping
-    private List<Producto> getProductos() {
+    public List<Producto> getProductos() {
         return servicioProducto.listarProductos();
     }
 
-    
-    @PostMapping
-    private Producto agregarProducto(@RequestBody Producto producto) {
-        return servicioProducto.agregarProducto(producto);
 
+    @PostMapping("/agregar")
+    public Producto agregarProducto(@RequestBody Producto producto) {
+        return servicioProducto.agregarProducto(producto);
+    }
+
+    @GetMapping("/buscar")
+    public List<Producto> buscarProducto(@RequestParam(required = true) String nombre) {
+        if (nombre != null) {
+            return servicioProducto.findByNombre(nombre);
+        }
+        return getProductos();
     }
 
 

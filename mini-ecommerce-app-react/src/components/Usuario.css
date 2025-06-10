@@ -1,27 +1,35 @@
 /* Contenido principal */
 .container-principal {
-    padding-left: 150px;
-    padding-right: 150px;
+     min-width: 1200px;
+    max-width: 1600px;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+
     height: 100vh;
+    box-sizing: border-box;
+    unicode-bidi: isolate;
 }
 
 .contenido-usuario {
     flex: 1;
     padding: 15px;
     border-radius: 8px;
+    min-width: 1000px;
 }
 
 /* Sidebar */
 .sidebar-usuario {
     width: 250px;
+    max-width: 250px;
     padding: 15px;
-    text-align: left;
     height: 100vh;
     border-radius: 8px;
 }
 
 .layout-usuario {
-    display: flex; 
+    display: flex;
 
 }
 
@@ -31,7 +39,7 @@
     padding: 20px;
     border-radius: 15px;
     border: 1px solid #ec7979;
-    
+
 }
 
 .btn-logout:hover {
@@ -46,22 +54,23 @@
 }
 
 .lista-lateral li {
-  padding: 10px;
-  cursor: pointer;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .lista-lateral li:hover {
-  background-color: #a51414;
+    background-color: #a51414;
 }
 
 .lista-lateral a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
+
 .lista-lateral li:hover {
     border-bottom: 1px solid #000000;
-     background-color: #ffffff63;
+    background-color: #ffffff63;
     border-radius: 12px;
 }
 

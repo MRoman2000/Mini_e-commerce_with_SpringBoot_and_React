@@ -15,7 +15,7 @@ public interface IServicioUsuario {
 
     public void eliminarUsuario(Integer id);
 
-    public UserDto actualizarUsuario(Integer id, Usuario usuario);
+    public Usuario actualizarUsuario(Integer id, Usuario usuario);
 
 
 }

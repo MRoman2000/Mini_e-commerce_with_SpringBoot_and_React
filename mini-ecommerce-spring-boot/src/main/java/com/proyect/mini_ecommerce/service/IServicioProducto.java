@@ -15,4 +15,6 @@ public interface IServicioProducto {
     public void eliminarProducto(Integer id);
 
     public Producto actualizarProducto(Integer id, Producto producto);
+
+    public  List<Producto> findByNombre(String nombre);
 }

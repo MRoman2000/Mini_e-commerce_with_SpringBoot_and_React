@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from './../../context/AuthContext';
+import { actualizarDatos } from '../../service/AuthService';
 import './MisDatos.css'
+
+
 export default function MisDatos() {
-    const { user, logout } = useAuth();
+    const { user, logout, loading, token } = useAuth();
     const [formulario, setFormulario] = useState({
         username: "",
         email: "",
@@ -11,7 +14,28 @@ export default function MisDatos() {
     });
     const [error, setError] = useState('');
 
-    if (!user) return <p>Cargando información del usuario...</p>;
+
+    const updateDatos = async () => {
+        try {
+
+            const resultado = await actualizarDatos(user.id, formulario, token)
+            setFormulario(resultado);
+            limpiarFormulario();
+        } catch (error) {
+            console.error("error", error);
+        }
+    }
+
+    const limpiarFormulario = () => {
+        setFormulario({
+            username: "",
+            email: "",
+            password: "",
+            confirmarPassword: "",
+
+        })
+
+    }
 
 
     const formSubmit = (e) => {
@@ -20,10 +44,8 @@ export default function MisDatos() {
             setError('Las contraseñas no coinciden');
             return;
         }
-
+        updateDatos();
         setError("");
-
-
     }
 
     const handleChange = (e) => {
@@ -32,7 +54,8 @@ export default function MisDatos() {
             [e.target.name]: e.target.value,
         });
     };
-
+    if (loading) return <p>Cargando información del usuario...</p>;
+    if (!user) return <p>No hay usuario logueado.</p>;
 
     return (
         <div className='conteiner-usuario'>
