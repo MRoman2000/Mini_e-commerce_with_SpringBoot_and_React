@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { agregarProducto } from '../../service/ProductosService';
 import { useAuth } from '../../context/AuthContext';
 import './Admin.css';
+
+
 export default function Admin() {
+
     const { token } = useAuth();
     const [formulario, setFormulario] = useState({
         nombre: "",
@@ -13,9 +16,8 @@ export default function Admin() {
     })
 
     const handleChange = (e) => {
-        const { value, name } = e.target;
         setFormulario({
-            ...formulario, [name]: value
+            ...formulario, [e.target.name]: e.target.value,
         })
     }
 

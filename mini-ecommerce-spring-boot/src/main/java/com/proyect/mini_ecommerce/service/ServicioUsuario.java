@@ -35,7 +35,7 @@ public class ServicioUsuario implements IServicioUsuario {
         String rawPassword = usuario.getPassword();
         usuario.setPassword(passwordEncoder.encode(rawPassword));
         Usuario guardado = repositorioUsuario.save(usuario);
-        return new UserDto(guardado.getId(), guardado.getUsername(), guardado.getEmail(), guardado.getRol());
+        return new UserDto(guardado.getId(), guardado.getUsername(), guardado.getEmail());
     }
 
     @Override
@@ -49,16 +49,20 @@ public class ServicioUsuario implements IServicioUsuario {
     }
 
 
-
     @Override
     public Usuario actualizarUsuario(Integer id, Usuario usuarioActualizar) {
+
         Usuario usuarioExistente = repositorioUsuario.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+        if (usuarioActualizar.getUsername() != null && !usuarioActualizar.getUsername().isEmpty()) {
+            usuarioExistente.setUsername(usuarioActualizar.getUsername());
+        }
 
+        if (usuarioActualizar.getEmail() != null && !usuarioActualizar.getEmail().isEmpty()) {
+            usuarioExistente.setEmail(usuarioActualizar.getEmail());
+        }
 
-        usuarioExistente.setUsername(usuarioActualizar.getUsername());
-        usuarioExistente.setEmail(usuarioActualizar.getEmail());
         if (usuarioActualizar.getPassword() != null && !usuarioActualizar.getPassword().isEmpty()) {
             String encodedPassword = passwordEncoder.encode(usuarioActualizar.getPassword());
             usuarioExistente.setPassword(encodedPassword);

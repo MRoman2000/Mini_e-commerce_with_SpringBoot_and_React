@@ -14,7 +14,7 @@ public class Usuario {
     private  String username;
     private  String email;
     private  String password;
-    private  String rol;
+    private  String roles;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Pedido> pedidos = new ArrayList<>();
 
@@ -22,12 +22,12 @@ public class Usuario {
 
     }
 
-    public Usuario(Integer id, String username, String email, String password, String rol){
+    public Usuario(Integer id, String username, String email, String password, String roles){
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.rol = rol;
+        this.roles = roles;
 
     }
 
@@ -71,11 +71,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getRol() {
-        return rol;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

@@ -13,7 +13,7 @@ export function CartProvider({ children }) {
             obtenerCarrito(token)
                 .then(data => {
                     const carritoFormateado = data.map(item => ({
-                        id: item.id, 
+                        id: item.id,
                         producto: {
                             id: item.productoId,
                             nombre: item.nombre,
@@ -70,15 +70,14 @@ export function CartProvider({ children }) {
         }
     };
 
-const clearCart = async () => {
-
-    try {
-        await eliminarCarrito( token);
-        setCartItems([]);
-    } catch (error) {
-        console.error("Error eliminando el carrito", error);
-    }
-};
+    const clearCart = async () => {
+        try {
+            await eliminarCarrito(token);
+            setCartItems([]);
+        } catch (error) {
+            console.error("Error eliminando el carrito", error);
+        }
+    };
 
 
     return (

@@ -18,8 +18,7 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
 public class ControladorUsuario {
-
-
+    
     @Autowired
     private ServicioUsuario servicioUsuario;
 
@@ -33,20 +32,22 @@ public class ControladorUsuario {
             return ResponseEntity
                     .badRequest()
                     .body(Collections.singletonMap("message", "El username ya está ocupado"));
-
         }
+
         return ResponseEntity.ok(creado);
     }
 
 
     @GetMapping("/usuarios/me")
     public ResponseEntity<UserDto> mostrarDatos(Authentication authentication) {
+
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
         UserDto usuario = new UserDto();
         usuario.setUsername(userDetails.getUsername());
         usuario.setId(userDetails.getId());
         usuario.setEmail(userDetails.getEmail());
-        usuario.setRol(userDetails.getRol());
+
         return ResponseEntity.ok(usuario);
     }
 
@@ -60,8 +61,15 @@ public class ControladorUsuario {
     private ResponseEntity<?> actualizar(@PathVariable Integer id, @RequestBody Usuario usuarioEditar) {
         Usuario usuarioActualizado = servicioUsuario.actualizarUsuario(id, usuarioEditar);
 
-        String nuevoToken = jwtUtil.generateToken(usuarioActualizado.getUsername());
-        return ResponseEntity.ok(new AuthResponse(nuevoToken));
+        boolean requiereNuevoToken = usuarioEditar.getRoles() != null &&
+                !usuarioEditar.getRoles().equals(usuarioActualizado.getRoles());
+
+        if (requiereNuevoToken) {
+            String nuevoToken = jwtUtil.generateAccessToken(usuarioActualizado);
+            return ResponseEntity.ok(new AuthResponse(nuevoToken));
+        }
+
+        return ResponseEntity.ok(usuarioActualizado);
 
     }
 

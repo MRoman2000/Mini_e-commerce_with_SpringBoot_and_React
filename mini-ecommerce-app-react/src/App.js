@@ -42,8 +42,14 @@ function App() {
             <Route path="mis-datos" element={<MisDatos />} />
             <Route path="pedidos" element={<Pedidos />} />
             <Route path="lista-deseos" element={<ListaDeseos />} />
-            <Route path="admin" element={<ProtectedRoute requiredRole="ADMIN"><Admin />
-            </ProtectedRoute>} />
+            <Route
+              path="/usuario/admin"
+              element={
+                <ProtectedRoute requiredRole="ROLE_ADMIN">
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
 
           </Route>
         </Routes>

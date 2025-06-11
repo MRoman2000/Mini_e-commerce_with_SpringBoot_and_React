@@ -41,8 +41,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 System.out.println("Token inválido o expirado");
             }
         }
-
-
         try {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);

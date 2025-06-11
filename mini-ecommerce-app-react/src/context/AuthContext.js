@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
 
     const token = localStorage.getItem('token');
 
+
     const logout = useCallback(() => {
         localStorage.removeItem('token');
       //  localStorage.removeItem('user');
@@ -25,8 +26,7 @@ export function AuthProvider({ children }) {
         try {
             const response = await obtenerDatos(token);
             setUser(response.data);
-            console.log(response.data);
-            localStorage.setItem('user', JSON.stringify(response.data));
+         //   localStorage.setItem('user', JSON.stringify(response.data));
         } catch (err) {
             console.error("Error al cargar el usuario:", err);
             logout();
