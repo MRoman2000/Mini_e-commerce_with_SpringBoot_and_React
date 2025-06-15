@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import api from "./Api";
 const API_URL = 'http://localhost:8080/api/productos';
 
 
@@ -21,7 +21,7 @@ export const buscarProducto = async (nombre) => {
 }
 
 
-export const agregarProducto = async (formulario, token) => {
+/*export const agregarProducto = async (formulario, token) => {
   const respuesta = await axios.post(`${API_URL}/agregar`, formulario, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -29,4 +29,6 @@ export const agregarProducto = async (formulario, token) => {
     }
   })
   return respuesta;
-}
+} */
+export const agregarProducto = (formulario) =>
+    api.post('/productos/agregar', formulario);

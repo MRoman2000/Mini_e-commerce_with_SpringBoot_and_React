@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 export default function Navbar() {
     const { user } = useAuth();
 
-
     return (
         <div>
             <nav className="nav-bar">

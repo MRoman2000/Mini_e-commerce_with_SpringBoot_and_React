@@ -1,6 +1,9 @@
 import axios from "axios";
+import api from "./Api";
+
 
 const API_URL = 'http://localhost:8080/api/carrito';
+
 
 export async function agregarProductoCarrito(productoId, cantidad, token) {
   try {
@@ -15,14 +18,10 @@ export async function agregarProductoCarrito(productoId, cantidad, token) {
   }
 }
 
-export async function obtenerCarrito(token) {
+export async function obtenerCarrito() {
   try {
-    const response = await axios.get(API_URL, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-     
+    const response = await api.get('/carrito'); 
     return response.data;
-  
   } catch (error) {
     console.error('Error obteniendo carrito', error);
     throw error;

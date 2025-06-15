@@ -14,8 +14,6 @@ export default function MisDatos() {
         confirmarPassword: ""
     });
 
-
-
     const updateDatos = async () => {
         try {
             const resultado = await actualizarDatos(user.id, formulario, token)
@@ -35,7 +33,6 @@ export default function MisDatos() {
         })
 
     }
-
 
     const formSubmit = (e) => {
         e.preventDefault();

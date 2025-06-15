@@ -16,19 +16,21 @@ export default function Login() {
     const formSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await login(user);
-            if (response.token) {
-                localStorage.setItem('token', response.token);
+            const response = await login(user); // response = { accessToken, refreshToken }
+            if (response.accessToken) {
+                localStorage.setItem('accessToken', response.accessToken);
                 window.dispatchEvent(new Event('login'));
                 navigate('/usuario');
+                console.log('Login successful!');
+            } else {
+                setErrorMessage('Respuesta inválida del servidor.');
             }
 
         } catch (error) {
-            console.error('Error en el login:', error);
+            console.error('Login failed:', error.response.data);
             setErrorMessage('Usuario o contraseña incorrectos');
         }
-
-    }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;

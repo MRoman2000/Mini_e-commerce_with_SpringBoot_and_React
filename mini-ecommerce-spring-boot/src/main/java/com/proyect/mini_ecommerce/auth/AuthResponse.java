@@ -1,17 +1,17 @@
 package com.proyect.mini_ecommerce.auth;
 
 public class AuthResponse {
-    private String token;
+    private String accessToken;
     private String refreshToken;
 
 
     public AuthResponse(String token, String refreshToken) {
-        this.token = token;
+        this.accessToken = token;
         this.refreshToken = refreshToken;
     }
 
     public AuthResponse(String token) {
-        this.token = token;
+        this.accessToken = token;
     }
 
     public String getRefreshToken() {
@@ -22,11 +22,11 @@ public class AuthResponse {
         this.refreshToken = refreshToken;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

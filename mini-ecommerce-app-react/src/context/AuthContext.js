@@ -11,11 +11,11 @@ export function AuthProvider({ children }) {
      //   return saved ? JSON.parse(saved) : null;
     });
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
 
 
     const logout = useCallback(() => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('accessToken');
       //  localStorage.removeItem('user');
         setUser(null);
         navigate('/login');
@@ -24,12 +24,12 @@ export function AuthProvider({ children }) {
     const loadUser = useCallback(async () => {
         if (!token) return;
         try {
-            const response = await obtenerDatos(token);
+            const response = await obtenerDatos();
             setUser(response.data);
          //   localStorage.setItem('user', JSON.stringify(response.data));
         } catch (err) {
             console.error("Error al cargar el usuario:", err);
-            logout();
+            //   logout();
         }
     }, [token, logout]);
 

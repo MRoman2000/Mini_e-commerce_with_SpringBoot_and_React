@@ -3,8 +3,8 @@ import { obtenerPedidos } from '../../service/PedidoService'
 import { useAuth } from './../../context/AuthContext';
 import './Pedidos.css'
 
-
 export default function Pedidos() {
+  
   const { token } = useAuth();
   const [pedidos, setPedidos] = useState([]);
 

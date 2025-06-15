@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 import java.security.Key;
@@ -19,8 +18,8 @@ public class JwtUtil {
 
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
-    // Duraciones configurables
-    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 5;       // 5 minutos
+    // Duraciones configurablesjwt.expiration=10000  # 10 segundos
+    private static final long ACCESS_TOKEN_VALIDITY = 30000;       // 5 minutos
     private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 7; // 7 días
 
     public String generateAccessToken(Usuario usuario) {

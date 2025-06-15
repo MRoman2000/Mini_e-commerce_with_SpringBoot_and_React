@@ -7,6 +7,7 @@ import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.security.JwtUtil;
 import com.proyect.mini_ecommerce.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,24 +31,23 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest request, HttpServletResponse response) {
         try {
-            AuthResponse tokens = authService.login(request);
+            AuthResponse tokens = authService.login(request, response);
             return ResponseEntity.ok(tokens);
 
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error en el servidor: " + e.getMessage());
         }
     }
 
+
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@RequestBody RefreshRequest request) {
-        String refreshToken = request.getRefreshToken();
+    public ResponseEntity<?> refreshToken(@CookieValue(name = "refreshToken", required = false) String refreshToken) {
+        System.out.println("Se llamó a /refresh con token: " + refreshToken);
+        if (refreshToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token no presente");
+        }
 
         if (jwtUtil.isTokenValid(refreshToken)) {
             String username = jwtUtil.extractUsername(refreshToken);
@@ -55,11 +55,13 @@ public class AuthController {
                     .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
             String newAccessToken = jwtUtil.generateAccessToken(usuario);
-            return ResponseEntity.ok(new AuthResponse(newAccessToken, refreshToken));
+            return ResponseEntity.ok(new AuthResponse(newAccessToken, null));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token inválido o expirado");
         }
     }
+
+
 
 }
 

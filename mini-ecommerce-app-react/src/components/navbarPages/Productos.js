@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { getProductos } from '../../service/ProductosService';
 import { useCart } from '../../context/CartContext';
 import { useQuery } from '@tanstack/react-query';
@@ -30,7 +30,7 @@ export default function Productos() {
             const resultado = await buscarProducto(query);
             setSearchResults(resultado);
         } catch (error) {
-            console.error('Error buscando producto:', error);
+            console.error('Error buscando producto:',error.message);
         }
     }
 

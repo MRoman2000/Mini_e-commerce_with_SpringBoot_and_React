@@ -5,7 +5,10 @@ import com.proyect.mini_ecommerce.auth.AuthResponse;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.security.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,7 +28,7 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public AuthResponse login(AuthRequest request) {
+    public AuthResponse login(AuthRequest request, HttpServletResponse response) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -38,7 +41,20 @@ public class AuthService {
         String accessToken = jwtUtil.generateAccessToken(usuario);
         String refreshToken = jwtUtil.generateRefreshToken(usuario);
 
-        return new AuthResponse(accessToken, refreshToken);
+        // Crear la cookie HttpOnly
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(7 * 24 * 60 * 60)
+                .sameSite("Lax")
+                .build();
+
+        // ENVIAR la cookie en la respuesta
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return new AuthResponse(accessToken, null); // no devuelvas refreshToken por body, solo la cookie.
     }
+
 
 }
