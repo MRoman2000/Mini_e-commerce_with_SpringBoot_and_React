@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IServicioUsuario {
 
-    public List<Usuario> listarUsuario();
+    public List<UserDto> listarUsuario();
 
     public UserDto crearUsuario(Usuario usuario);
 

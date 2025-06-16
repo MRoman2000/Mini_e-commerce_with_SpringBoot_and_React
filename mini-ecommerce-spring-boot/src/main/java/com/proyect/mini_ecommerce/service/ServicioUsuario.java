@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +21,18 @@ public class ServicioUsuario implements IServicioUsuario {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<Usuario> listarUsuario() {
-        return repositorioUsuario.findAll();
+    public List<UserDto> listarUsuario() {
+        List<Usuario> usuarios = repositorioUsuario.findAll();
+        List<UserDto> usuariosDto = new ArrayList<>();
+
+        for (Usuario user : usuarios) {
+            UserDto dto = new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getRoles());
+            usuariosDto.add(dto);
+        }
+
+        return usuariosDto;
     }
+
 
     @Override
     public UserDto crearUsuario(Usuario usuario) {
@@ -34,8 +44,10 @@ public class ServicioUsuario implements IServicioUsuario {
         }
         String rawPassword = usuario.getPassword();
         usuario.setPassword(passwordEncoder.encode(rawPassword));
+        usuario.setRoles("USER");
         Usuario guardado = repositorioUsuario.save(usuario);
-        return new UserDto(guardado.getId(), guardado.getUsername(), guardado.getEmail());
+
+        return new UserDto(guardado.getId(), guardado.getUsername(), guardado.getEmail(), guardado.getRoles());
     }
 
     @Override

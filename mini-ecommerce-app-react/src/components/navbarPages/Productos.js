@@ -19,6 +19,8 @@ export default function Productos() {
     const { data: productos, error, isLoading } = useQuery({
         queryKey: ['productos'],
         queryFn: getProductos,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false, // no vuelve a pedir al cambiar de ventana
     });
 
     const handleSearch = async (e) => {
@@ -30,7 +32,7 @@ export default function Productos() {
             const resultado = await buscarProducto(query);
             setSearchResults(resultado);
         } catch (error) {
-            console.error('Error buscando producto:',error.message);
+            console.error('Error buscando producto:', error.message);
         }
     }
 

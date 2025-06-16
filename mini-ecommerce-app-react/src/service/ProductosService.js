@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:8080/api/productos';
 
 export const getProductos = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await api.get("/productos");
     return response.data;
   } catch (error) {
     console.error("Error al obtener productos:", error);
@@ -30,5 +30,7 @@ export const buscarProducto = async (nombre) => {
   })
   return respuesta;
 } */
-export const agregarProducto = (formulario) =>
-    api.post('/productos/agregar', formulario);
+
+export const agregarProducto = (formulario) => {
+  api.post('/productos/agregar', formulario);
+}

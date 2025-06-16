@@ -13,47 +13,39 @@ import MisDatos from './components/pages/MisDatos';
 import { Navigate } from "react-router-dom";
 import Register from './components/pages/Register';
 import Admin from './components/navbarPages/Admin';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
 
 function App() {
   return (
     <div className="App">
-      <QueryClientProvider client={queryClient}>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/productos" element={<Productos />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cesta" element={<Cesta />} />
-          <Route path="/register" element={<Register />} />
-
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cesta" element={<Cesta />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/usuario"
+          element={
+            <ProtectedRoute>
+              <Usuario />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="mis-datos" replace />} />
+          <Route path="mis-datos" element={<MisDatos />} />
+          <Route path="pedidos" element={<Pedidos />} />
+          <Route path="lista-deseos" element={<ListaDeseos />} />
           <Route
-            path="/usuario"
+            path="/usuario/admin"
             element={
-              <ProtectedRoute>
-                <Usuario />
+              <ProtectedRoute requiredRole="ROLE_ADMIN">
+                <Admin />
               </ProtectedRoute>
             }
-          >
-            {/* Subrutas anidadas */}
-            <Route index element={<Navigate to="mis-datos" replace />} />
-            <Route path="mis-datos" element={<MisDatos />} />
-            <Route path="pedidos" element={<Pedidos />} />
-            <Route path="lista-deseos" element={<ListaDeseos />} />
-            <Route
-              path="/usuario/admin"
-              element={
-                <ProtectedRoute requiredRole="ROLE_ADMIN">
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-
-          </Route>
-        </Routes>
-      </QueryClientProvider>
+          />
+        </Route>
+      </Routes>
     </div>
   );
 }

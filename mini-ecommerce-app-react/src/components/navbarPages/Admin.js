@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { agregarProducto } from '../../service/ProductosService';
-import { useAuth } from '../../context/AuthContext';
 import { obtenerUsuarios } from '../../service/AuthService';
 import './Admin.css';
 
@@ -19,6 +18,7 @@ export default function Admin() {
         setLoading(true);
         try {
             const respuesta = await obtenerUsuarios();
+            console.log("respuesta de obtenerUsuarios:", respuesta);
             setUsuarios(respuesta);
         } catch (error) {
             console.error(error);
@@ -51,7 +51,7 @@ export default function Admin() {
             });
             alert("Producto agregado correctamente");
         } catch (error) {
-            alert("Error al agregar producto",error);
+            alert("Error al agregar producto", error);
         }
     };
 

@@ -1,25 +1,13 @@
-import axios from 'axios';
+import api from './Api';
 
 const API_URL = 'http://localhost:8080/api/pedidos';
 
-
-export async function crearPedido(productos, token) {
-    const response = await axios.post(
-        API_URL, productos, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    });
+export async function crearPedido(productos) {
+    const response = await api.post(API_URL, productos);
     return response.data;
 }
 
-export async function obtenerPedidos(token) {
-    const response = await axios.get(API_URL, {
-         headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    });
+export async function obtenerPedidos() {
+    const response = await api.get(API_URL);
     return response.data;
 }

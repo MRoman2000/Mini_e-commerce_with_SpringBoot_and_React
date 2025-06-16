@@ -55,7 +55,7 @@ public class AuthController {
                     .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
             String newAccessToken = jwtUtil.generateAccessToken(usuario);
-            return ResponseEntity.ok(new AuthResponse(newAccessToken, null));
+            return ResponseEntity.ok(new AuthResponse(newAccessToken));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token inválido o expirado");
         }

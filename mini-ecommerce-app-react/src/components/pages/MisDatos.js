@@ -5,7 +5,7 @@ import './MisDatos.css'
 
 export default function MisDatos() {
 
-    const { user, logout, loading, token } = useAuth();
+    const {user, logout, loading, token } = useAuth();
     const [error, setError] = useState('');
     const [formulario, setFormulario] = useState({
         username: "",
@@ -16,7 +16,7 @@ export default function MisDatos() {
 
     const updateDatos = async () => {
         try {
-            const resultado = await actualizarDatos(user.id, formulario, token)
+            const resultado = await actualizarDatos(user.id, formulario)
             setFormulario(resultado);
             limpiarFormulario();
         } catch (error) {

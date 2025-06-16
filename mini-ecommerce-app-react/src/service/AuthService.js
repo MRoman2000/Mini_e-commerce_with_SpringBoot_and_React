@@ -14,12 +14,7 @@ export const register = async (datos) => {
 }
 
 export const actualizarDatos = async (idUsuario, datosUsuario, token) => {
-    const { data } = await axios.put(`${API_URL}/usuarios/${idUsuario}`, datosUsuario, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    if (data.token) {
-        localStorage.setItem('token', data.token);
-    }
+    const { data } = await api.put(`${API_URL}/usuarios/${idUsuario}`, datosUsuario);
     return data;
 };
 
@@ -34,6 +29,7 @@ export const obtenerDatos = async () => {
 }
 
 export const refreshToken = async () => {
+    console.log("Consulta" + 1);
     const response = await api.post('/auth/refresh');
     localStorage.setItem('accessToken', response.data.accessToken);
     return response.data;

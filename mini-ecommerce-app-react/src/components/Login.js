@@ -1,25 +1,26 @@
 import { useState } from 'react'
 import { login } from '../service/AuthService';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Login.css'
 
 
 export default function Login() {
-
+    const { setToken } = useAuth();
     const [errorMessage, setErrorMessage] = useState('');
     const [user, setUser] = useState({
         username: '',
         password: ''
     });
+
     const navigate = useNavigate();
 
     const formSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await login(user); // response = { accessToken, refreshToken }
+            const response = await login(user);
             if (response.accessToken) {
-                localStorage.setItem('accessToken', response.accessToken);
-                window.dispatchEvent(new Event('login'));
+                setToken(response.accessToken); // actualiza el contexto correctamente
                 navigate('/usuario');
                 console.log('Login successful!');
             } else {

@@ -1,15 +1,14 @@
-import axios from "axios";
+
 import api from "./Api";
 
 
 const API_URL = 'http://localhost:8080/api/carrito';
 
 
-export async function agregarProductoCarrito(productoId, cantidad, token) {
+export async function agregarProductoCarrito(productoId, cantidad) {
   try {
-    const response = await axios.post(API_URL,
+    const response = await api.post(API_URL,
       { productoId, cantidad },
-      { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data;
   } catch (error) {
@@ -20,7 +19,7 @@ export async function agregarProductoCarrito(productoId, cantidad, token) {
 
 export async function obtenerCarrito() {
   try {
-    const response = await api.get('/carrito'); 
+    const response = await api.get('/carrito');
     return response.data;
   } catch (error) {
     console.error('Error obteniendo carrito', error);
@@ -29,11 +28,9 @@ export async function obtenerCarrito() {
 }
 
 
-export async function eliminarCarrito(token) {
+export async function eliminarCarrito() {
   try {
-    const response = await axios.delete(API_URL, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const response = await api.delete("/carrito");
     return response.data;
   } catch (error) {
     console.error('Error eliminando carrito:', error);
@@ -41,8 +38,7 @@ export async function eliminarCarrito(token) {
   }
 }
 
-export async function eliminarItemCarrito(productoId, token) {
-  await axios.delete(`${API_URL}/item/${productoId}`, {
-    headers: { Authorization: `Bearer ${token}` }
+export async function eliminarItemCarrito(productoId) {
+  await api.delete(`${API_URL}/item/${productoId}`, {
   });
 }

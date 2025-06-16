@@ -42,17 +42,15 @@ public class ControladorUsuario {
     public ResponseEntity<UserDto> mostrarDatos(Authentication authentication) {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-
         UserDto usuario = new UserDto();
         usuario.setUsername(userDetails.getUsername());
         usuario.setId(userDetails.getId());
         usuario.setEmail(userDetails.getEmail());
-
         return ResponseEntity.ok(usuario);
     }
 
     @GetMapping("/admin")
-    public List<Usuario> obtenerTodosUsuarios() {
+    public List<UserDto> obtenerTodosUsuarios() {
         return servicioUsuario.listarUsuario();
     }
 

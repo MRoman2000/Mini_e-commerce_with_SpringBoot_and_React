@@ -41,7 +41,7 @@ export function CartProvider({ children }) {
 
         try {
             // Llamada backend para añadir producto y cantidad
-            await agregarProductoCarrito(producto.id, cantidad, token);
+            await agregarProductoCarrito(producto.id, cantidad);
             // Actualizar estado local sincronizando cantidades
             setCartItems(prev => {
                 const existente = prev.find(item => item.producto.id === producto.id);
@@ -63,7 +63,7 @@ export function CartProvider({ children }) {
 
     const removeFromCart = async (itemId) => {
         try {
-            await eliminarItemCarrito(itemId, token); // eliminas por itemId
+            await eliminarItemCarrito(itemId); // eliminas por itemId
             setCartItems(prev => prev.filter(item => item.id !== itemId)); // eliminas localmente por itemId
         } catch (error) {
             console.error("Error eliminando el producto del carrito", error);
@@ -72,7 +72,7 @@ export function CartProvider({ children }) {
 
     const clearCart = async () => {
         try {
-            await eliminarCarrito(token);
+            await eliminarCarrito();
             setCartItems([]);
         } catch (error) {
             console.error("Error eliminando el carrito", error);

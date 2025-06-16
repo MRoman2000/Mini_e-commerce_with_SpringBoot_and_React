@@ -27,6 +27,7 @@ public class ControladorCarrito {
     @GetMapping
     public List<CarritoItemDTO> obtenerCarrito(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
+        System.out.println("Carrito");
         return servicioCarrito.obtenerCarritoPorUsuario(username);
     }
 

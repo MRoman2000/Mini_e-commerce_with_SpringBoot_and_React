@@ -44,16 +44,16 @@ public class AuthService {
         // Crear la cookie HttpOnly
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .path("/")
                 .maxAge(7 * 24 * 60 * 60)
-                .sameSite("Lax")
+                .sameSite("Strict")
                 .build();
 
         // ENVIAR la cookie en la respuesta
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return new AuthResponse(accessToken, null); // no devuelvas refreshToken por body, solo la cookie.
+        return new AuthResponse(accessToken); // no devuelvas refreshToken por body, solo la cookie.
     }
 
 

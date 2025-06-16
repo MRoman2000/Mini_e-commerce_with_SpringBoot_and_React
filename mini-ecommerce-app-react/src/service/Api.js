@@ -2,38 +2,64 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: 'http://localhost:8080/api',
-    withCredentials: true // Esto permite enviar cookies HttpOnly automáticamente
+    withCredentials: true,
 });
 
-api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('accessToken');
-        if (token) config.headers.Authorization = `Bearer ${token}`;
-        return config;
-    }
-);
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+function onRefreshed(token) {
+    refreshSubscribers.forEach(callback => callback(token));
+    refreshSubscribers = [];
+}
+
+function addRefreshSubscriber(callback) {
+    refreshSubscribers.push(callback);
+}
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
 
 api.interceptors.response.use(
     (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
-        
-        if (error.response && error.response.status === 401 && !originalRequest._retry) {
-            console.log('Interceptado 401, intentando refrescar token...');
+    (error) => {
+        const { config, response } = error;
+        const originalRequest = config;
+
+        if (response && response.status === 401 && !originalRequest._retry) {
+            if (isRefreshing) {
+                // Ya hay un refresh en curso, devolvemos una promesa que espera a que se actualice el token
+                return new Promise((resolve) => {
+                    addRefreshSubscriber((token) => {
+                        originalRequest.headers.Authorization = 'Bearer ' + token;
+                        resolve(api(originalRequest));
+                    });
+                });
+            }
 
             originalRequest._retry = true;
+            isRefreshing = true;
 
-            try {
-                const res = await axios.post('http://localhost:8080/api/auth/refresh', {}, { withCredentials: true });
-                localStorage.setItem('accessToken', res.data.accessToken);
-                console.log('Nuevo accessToken:', res.data.accessToken);
-
-                return api(originalRequest); // Retry original request
-            } catch (refreshError) {
-                console.error('Error al renovar token:', refreshError);
-                // Opcional: Logout del usuario
-            }
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const res = await axios.post('http://localhost:8080/api/auth/refresh', {}, { withCredentials: true });
+                    const newToken = res.data.accessToken;
+                    localStorage.setItem('accessToken', newToken);
+                    api.defaults.headers.common['Authorization'] = 'Bearer ' + newToken;
+                    onRefreshed(newToken);
+                    resolve(api(originalRequest));
+                } catch (err) {
+                    reject(err);
+                    // Aquí puedes forzar logout o limpieza si el refresh falla
+                } finally {
+                    isRefreshing = false;
+                }
+            });
         }
+
         return Promise.reject(error);
     }
 );
