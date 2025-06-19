@@ -3,7 +3,6 @@ package com.proyect.mini_ecommerce.service;
 import com.proyect.mini_ecommerce.modelo.CustomUserDetails;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
-import jakarta.persistence.Cacheable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

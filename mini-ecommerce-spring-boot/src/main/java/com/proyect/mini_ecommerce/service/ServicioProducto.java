@@ -45,7 +45,6 @@ public class ServicioProducto implements IServicioProducto {
         buscarProducto.setPrecio(producto.getPrecio());
         buscarProducto.setImagenUrl(producto.getImagenUrl());
 
-
         return repositorioProducto.save(buscarProducto);
     }
 

@@ -159,20 +159,53 @@
   margin-bottom: 12px;
 }
 
-/* Botón añadir al carrito */
+
+.acciones-producto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 .btn-add-cart {
-  margin-top: 10px;
-  background: #2980b9;
-  border: none;
+  background-color: #0051a8;
   color: white;
-  padding: 12px 22px;
+  padding: 8px 16px;
+  border: none;
   border-radius: 8px;
-  font-weight: 700;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  user-select: none;
-  box-shadow: 0 5px 15px rgba(41, 128, 185, 0.5);
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.btn-wishlist {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+.btn-add-cart:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+
+.btn-wishlist:hover {
+  background-color: #ffe6e6;
+}
+
+.icono-corazon {
+  color: grey;
+  transition: color 0.3s ease;
+}
+
+.btn-wishlist:hover .icono-corazon {
+  color: red;
 }
 
 .btn-add-cart:hover {

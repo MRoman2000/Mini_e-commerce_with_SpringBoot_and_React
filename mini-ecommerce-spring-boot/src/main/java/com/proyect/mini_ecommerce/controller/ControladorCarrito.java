@@ -2,6 +2,7 @@ package com.proyect.mini_ecommerce.controller;
 
 import com.proyect.mini_ecommerce.dto.AgregarCarritoRequest;
 import com.proyect.mini_ecommerce.dto.CarritoItemDTO;
+import com.proyect.mini_ecommerce.modelo.CustomUserDetails;
 import com.proyect.mini_ecommerce.modelo.Usuario;
 import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.service.ServicioCarrito;
@@ -25,29 +26,27 @@ public class ControladorCarrito {
     private RepositorioUsuario repositorioUsuario;
 
     @GetMapping
-    public List<CarritoItemDTO> obtenerCarrito(@AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername();
-        System.out.println("Carrito");
-        return servicioCarrito.obtenerCarritoPorUsuario(username);
+    public List<CarritoItemDTO> obtenerCarrito(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return servicioCarrito.obtenerCarritoPorUsuarioId(userDetails.getId());
     }
+
 
     @PostMapping
-    public void agregarCarrito(@RequestBody AgregarCarritoRequest request,
-                               @AuthenticationPrincipal UserDetails userDetails) {
-
-        String username = userDetails.getUsername();
-        Usuario usuario = repositorioUsuario.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        servicioCarrito.agregarProductoACarrito(usuario.getId(), request.getProductoId(), request.getCantidad());
+    public ResponseEntity<?> agregarCarrito(@RequestBody AgregarCarritoRequest request,
+                                            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Integer idUsuario = userDetails.getId();
+        servicioCarrito.agregarProductoACarrito(idUsuario, request.getProductoId(), request.getCantidad());
+        return ResponseEntity.ok().build();
     }
+
 
     @DeleteMapping
-    public ResponseEntity<?> eliminarCarritoDelUsuario(@AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername();
-        servicioCarrito.eliminarCarritoPorUsuario(username);
+    public ResponseEntity<?> eliminarCarritoDelUsuario(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Integer userId = userDetails.getId();
+        servicioCarrito.eliminarCarritoPorUsuarioId(userId);
         return ResponseEntity.ok("Carrito del usuario eliminado correctamente.");
     }
+
 
     @DeleteMapping("/item/{id}")
     public ResponseEntity<?> eliminarItemDelCarrito(@PathVariable Integer id) {

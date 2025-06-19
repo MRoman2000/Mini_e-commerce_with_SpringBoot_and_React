@@ -5,7 +5,6 @@ public class AgregarCarritoRequest {
     private Integer cantidad;
 
 
-
     public Integer getProductoId() {
         return productoId;
     }

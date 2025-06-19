@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { agregarProductoWishlist } from '../service/WishlistService';
 import { obtenerCarrito, agregarProductoCarrito, eliminarCarrito, eliminarItemCarrito } from '../service/CarritoService';
 import { useAuth } from './AuthContext';
 
@@ -10,7 +11,7 @@ export function CartProvider({ children }) {
 
     useEffect(() => {
         if (token) {
-            obtenerCarrito(token)
+            obtenerCarrito()
                 .then(data => {
                     const carritoFormateado = data.map(item => ({
                         id: item.id,
@@ -60,6 +61,21 @@ export function CartProvider({ children }) {
             alert("No se pudo agregar el producto al carrito");
         }
     };
+    const addTowishlist = async (producto) => {
+        if (!token) {
+            alert("Debes iniciar sesión para agregar productos al carrito");
+            return;
+        }
+        try {
+            await agregarProductoWishlist(producto.id);
+        } catch (error) {
+            console.error("error", error)
+            alert("No se pudo agregar el producto al carrito");
+        }
+
+
+
+    }
 
     const removeFromCart = async (itemId) => {
         try {
@@ -81,7 +97,7 @@ export function CartProvider({ children }) {
 
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, addTowishlist }}>
             {children}
         </CartContext.Provider>
     );

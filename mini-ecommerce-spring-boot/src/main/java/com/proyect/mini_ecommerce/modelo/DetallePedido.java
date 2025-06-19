@@ -58,7 +58,6 @@ public class DetallePedido {
     }
 
 
-
     public Integer getCantidad() {
         return cantidad;
     }

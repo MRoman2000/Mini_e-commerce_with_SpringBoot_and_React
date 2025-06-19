@@ -71,11 +71,9 @@ public class ServicioCarrito implements IServicioCarrito {
     }
 
     @Override
-    public List<CarritoItemDTO> obtenerCarritoPorUsuario(String username) {
-        Usuario usuario = repositorioUsuario.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    public List<CarritoItemDTO> obtenerCarritoPorUsuarioId(Integer idUsuario) {
+        List<CarritoItem> carritoItems = repositorioCarritoItem.findByCarritoUsuarioId(idUsuario);
 
-        List<CarritoItem> carritoItems = repositorioCarritoItem.findByCarritoUsuarioId(usuario.getId());
         return carritoItems.stream()
                 .map(item -> new CarritoItemDTO(
                         item.getId(),
@@ -89,16 +87,14 @@ public class ServicioCarrito implements IServicioCarrito {
                 .collect(Collectors.toList());
     }
 
+
     @Transactional
     @Override
-    public void eliminarCarritoPorUsuario(String username) {
-        Usuario usuario = repositorioUsuario.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        Carrito carrito = repositorioCarrito.findByUsuarioId(usuario.getId())
+    public void eliminarCarritoPorUsuarioId(Integer idUser) {
+        Carrito carrito = repositorioCarrito.findByUsuarioId(idUser)
                 .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
 
-        repositorioCarrito.delete(carrito); // Esto también elimina los CarritoItem si tienes `orphanRemoval = true`
+        repositorioCarrito.delete(carrito); // Elimina el carrito y sus items si tienes `orphanRemoval = true`
     }
 
 

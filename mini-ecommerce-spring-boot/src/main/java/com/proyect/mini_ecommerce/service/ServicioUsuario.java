@@ -37,7 +37,7 @@ public class ServicioUsuario implements IServicioUsuario {
     @Override
     public UserDto crearUsuario(Usuario usuario) {
         String username = usuario.getUsername();
-        Optional<Usuario> existente = repositorioUsuario.findByUsername(username);
+           Optional<Usuario> existente = repositorioUsuario.findByUsername(username);
 
         if (existente.isPresent()) {
             return null;

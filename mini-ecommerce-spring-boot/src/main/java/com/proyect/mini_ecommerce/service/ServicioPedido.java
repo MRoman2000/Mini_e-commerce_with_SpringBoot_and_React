@@ -1,5 +1,6 @@
 package com.proyect.mini_ecommerce.service;
 
+import com.proyect.mini_ecommerce.Utils.StockInsuficienteException;
 import com.proyect.mini_ecommerce.dto.DetallePedidoDTO;
 import com.proyect.mini_ecommerce.dto.PedidoDTO;
 import com.proyect.mini_ecommerce.dto.ProductoCantidadDTO;
@@ -34,7 +35,8 @@ public class ServicioPedido implements IServicioPedido {
 
     @Transactional
     public void crearPedido(Integer usuarioId, List<ProductoCantidadDTO> productosCantidad) {
-        Usuario usuario = repositorioUsuario.findById(usuarioId).orElseThrow(() -> new RuntimeException("No encontrado el usuario"));
+        Usuario usuario = new Usuario();
+        usuario.setId(usuarioId);
 
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuario);
@@ -43,17 +45,18 @@ public class ServicioPedido implements IServicioPedido {
         BigDecimal total = BigDecimal.ZERO;
         List<DetallePedido> detalles = new ArrayList<>();
 
-
         for (ProductoCantidadDTO pc : productosCantidad) {
-            Producto producto = repositorioProducto.findById(pc.getProductoId()).orElseThrow(() -> new RuntimeException("no hay producto"));
+            Producto producto = repositorioProducto.findById(pc.getProductoId())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
             if (producto.getStock() < pc.getCantidad()) {
-                throw new RuntimeException("Stock insuficiente para producto: " + producto.getNombre());
+                throw new StockInsuficienteException("Stock insuficiente para producto: " + producto.getNombre());
             }
 
             // Actualizar stock
             producto.setStock(producto.getStock() - pc.getCantidad());
             repositorioProducto.save(producto);
+
             DetallePedido detalle = new DetallePedido();
             detalle.setProducto(producto);
             detalle.setCantidad(pc.getCantidad());
@@ -69,8 +72,8 @@ public class ServicioPedido implements IServicioPedido {
         pedido.setDetallePedidos(detalles);
 
         repositorioPedido.save(pedido);
-
     }
+
 
     public List<PedidoDTO> obtenerPedidosConDetallesPorUsuario(Integer usuarioId) {
         List<Pedido> pedidos = repositorioPedido.findByUsuarioId(usuarioId);
@@ -84,7 +87,7 @@ public class ServicioPedido implements IServicioPedido {
                 BigDecimal precioUnitario = detalle.getPrecio_unitario();
                 String imagenUrl = detalle.getProducto().getImagenUrl();
 
-                DetallePedidoDTO detalleDTO = new DetallePedidoDTO(nombreProducto, cantidad, precioUnitario,imagenUrl);
+                DetallePedidoDTO detalleDTO = new DetallePedidoDTO(nombreProducto, cantidad, precioUnitario, imagenUrl);
                 detalleDTOs.add(detalleDTO);
             }
 

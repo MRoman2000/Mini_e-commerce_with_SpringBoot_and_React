@@ -20,6 +20,7 @@ export async function agregarProductoCarrito(productoId, cantidad) {
 export async function obtenerCarrito() {
   try {
     const response = await api.get('/carrito');
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error('Error obteniendo carrito', error);

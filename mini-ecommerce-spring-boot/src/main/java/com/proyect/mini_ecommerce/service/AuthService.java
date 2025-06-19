@@ -2,8 +2,8 @@ package com.proyect.mini_ecommerce.service;
 
 import com.proyect.mini_ecommerce.auth.AuthRequest;
 import com.proyect.mini_ecommerce.auth.AuthResponse;
+import com.proyect.mini_ecommerce.modelo.CustomUserDetails;
 import com.proyect.mini_ecommerce.modelo.Usuario;
-import com.proyect.mini_ecommerce.repository.RepositorioUsuario;
 import com.proyect.mini_ecommerce.security.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +12,11 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-
-    @Autowired
-    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -33,10 +29,12 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-
-        Usuario usuario = repositorioUsuario.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado en BD"));
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        Usuario usuario = new Usuario();
+        usuario.setId(userDetails.getId());
+        usuario.setUsername(userDetails.getUsername());
+        usuario.setEmail(userDetails.getEmail());
+        usuario.setRoles(userDetails.getRoles());
 
         String accessToken = jwtUtil.generateAccessToken(usuario);
         String refreshToken = jwtUtil.generateRefreshToken(usuario);
@@ -53,7 +51,7 @@ public class AuthService {
         // ENVIAR la cookie en la respuesta
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return new AuthResponse(accessToken); // no devuelvas refreshToken por body, solo la cookie.
+        return new AuthResponse(accessToken);
     }
 
 

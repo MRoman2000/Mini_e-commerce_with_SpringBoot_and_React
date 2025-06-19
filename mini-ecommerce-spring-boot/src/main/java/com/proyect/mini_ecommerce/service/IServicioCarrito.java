@@ -2,7 +2,6 @@ package com.proyect.mini_ecommerce.service;
 
 import com.proyect.mini_ecommerce.dto.CarritoItemDTO;
 import com.proyect.mini_ecommerce.modelo.Carrito;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,9 +11,9 @@ public interface IServicioCarrito {
 
     public void agregarProductoACarrito(Integer usuarioId, Integer productoId, Integer cantidad);
 
-    List<CarritoItemDTO> obtenerCarritoPorUsuario(String username);
+    List<CarritoItemDTO> obtenerCarritoPorUsuarioId(Integer id);
 
-    void eliminarCarritoPorUsuario(String username);
+    void eliminarCarritoPorUsuarioId(Integer idUser);
 
     public void eliminarItemCarrito(Integer id);
 }

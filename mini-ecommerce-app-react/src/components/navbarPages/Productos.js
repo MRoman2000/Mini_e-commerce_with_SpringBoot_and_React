@@ -3,11 +3,12 @@ import { getProductos } from '../../service/ProductosService';
 import { useCart } from '../../context/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { buscarProducto } from '../../service/ProductosService';
+import { FaHeart } from 'react-icons/fa';
 import './Productos.css';
 
 export default function Productos() {
     //  const [productos, setProductos] = useState([]);
-    const { addToCart } = useCart();
+    const { addToCart, addTowishlist } = useCart();
     const [query, setQuery] = useState("");
     const [searchResults, setSearchResults] = useState(null);
     /*   useEffect(() => {
@@ -15,7 +16,7 @@ export default function Productos() {
            obtenerProductos();
        }, []); */
 
-    // Aquí React Query maneja el fetching, caché, estado y errores
+
     const { data: productos, error, isLoading } = useQuery({
         queryKey: ['productos'],
         queryFn: getProductos,
@@ -74,9 +75,19 @@ export default function Productos() {
                                 <h2 className="product-name">{producto.nombre}</h2>
                                 <p className="product-description">{producto.descripcion}</p>
                                 <p className="product-price"> $ {producto.precio}</p>
-                                <button className="btn-add-cart" onClick={() => addToCart(producto)}>
-                                    Añadir al carrito
-                                </button>
+                                <div className="acciones-producto">
+                                    <button
+                                        className="btn-add-cart"
+                                        onClick={() => addToCart(producto)}
+                                        disabled={producto.stock === 0}
+                                    >
+                                        {producto.stock === 0 ? 'Sin stock' : 'Añadir al carrito'}
+                                    </button>
+                                    <button className="btn-wishlist" onClick={() => addTowishlist(producto)}>
+                                        <FaHeart size={20} className="icono-corazon" />
+                                    </button>
+                                </div>
+
                             </li>
                         ))}
                     </ul>

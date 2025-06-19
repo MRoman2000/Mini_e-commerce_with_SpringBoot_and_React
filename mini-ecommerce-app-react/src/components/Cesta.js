@@ -1,12 +1,10 @@
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext'; // donde tengas el token
 import { crearPedido } from '../service/PedidoService';
 
 import './Cesta.css';
 
 export default function Cesta() {
     const { cartItems, removeFromCart, clearCart } = useCart();
-    const { token } = useAuth(); // o donde almacenes el JWT
 
     const calcularTotal = () =>
         cartItems.reduce(
@@ -19,7 +17,7 @@ export default function Cesta() {
                 productoId: item.producto.id,
                 cantidad: item.cantidad
             }));
-            await crearPedido(productosParaEnviar, token);
+            await crearPedido(productosParaEnviar);
             alert('Pedido enviado correctamente');
             clearCart();
         } catch (error) {
@@ -47,7 +45,7 @@ export default function Cesta() {
                                 <h3>{item.producto.nombre}</h3>
                                 <p>{item.producto.descripcion}</p>
                                 <p>
-                                    {item.cantidad} x {item.producto.precio.toFixed(2)} €
+                                    {item.cantidad} x {item.producto.precio} €
                                 </p>
 
                             </div>

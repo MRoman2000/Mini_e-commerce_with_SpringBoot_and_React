@@ -3,7 +3,6 @@ package com.proyect.mini_ecommerce.modelo;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,21 +18,20 @@ public class Pedido {
     private BigDecimal total;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")  // aquí se define la clave foránea
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePedido> detallePedidos = new ArrayList<>();
 
     public Pedido() {
     }
 
-    public Pedido(Integer id, String usuario_id, LocalDateTime fecha, BigDecimal  total) {
+    public Pedido(Integer id, String usuario_id, LocalDateTime fecha, BigDecimal total) {
         this.id = id;
         this.fecha = fecha;
         this.total = total;
     }
-
 
 
     public Integer getId() {
@@ -72,7 +70,7 @@ public class Pedido {
         return total;
     }
 
-    public void setTotal(BigDecimal  total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 }

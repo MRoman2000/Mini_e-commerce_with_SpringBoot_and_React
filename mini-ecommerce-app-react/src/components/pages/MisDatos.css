@@ -13,6 +13,25 @@
     flex-direction: column;
 }
 
+.btn-delete {
+   
+  border: none;
+  padding: 8px;
+  border-radius: 20%;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover .icono-papelera{
+  color: red;
+}
+
+.icono-papelera {
+  color: grey;
+  transition: color 0.3s ease;
+}
+
 .usuario-info {
     padding: 20px;
     border-radius: 15px;
