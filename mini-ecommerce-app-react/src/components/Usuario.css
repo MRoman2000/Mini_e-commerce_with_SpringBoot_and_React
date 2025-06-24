@@ -18,7 +18,6 @@
 /* Sidebar */
 .sidebar-usuario {
     width: 250px;
-
     max-width: 250px;
     padding: 15px;
     height: 100vh;
@@ -75,17 +74,34 @@
 }
 
 
-
 @media screen and (max-width: 900px) {
     .layout-usuario {
         flex-direction: column;
         align-items: center;
         gap: 16px;
-        max-width: 100%;
     }
-    .sidebar-usuario, .contenido-usuario {
+    .sidebar-usuario {
         width: 100%;
         max-width: 100%;
-        min-width: unset;
+        height: auto;
+        border-radius: 8px;
     }
+    .contenido-usuario {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container-principal {
+        padding: 30px;
+    }
+    .sidebar-usuario {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+   
 }

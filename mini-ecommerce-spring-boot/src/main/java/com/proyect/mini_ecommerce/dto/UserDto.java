@@ -13,6 +13,11 @@ public class UserDto {
         this.roles = roles;
     }
 
+
+
+    public UserDto() {
+    }
+
     public String getRoles() {
         return roles;
     }
@@ -20,10 +25,6 @@ public class UserDto {
     public void setRoles(String roles) {
         this.roles = roles;
     }
-
-    public UserDto() {
-    }
-
     public Integer getId() {
         return id;
     }

@@ -6,7 +6,7 @@ export default function Navbar() {
     const { user } = useAuth();
 
     return (
-        <div>
+      
             <nav className="nav-bar">
                 <ul className="nav-list">
                     <li>
@@ -48,6 +48,5 @@ export default function Navbar() {
                 </ul>
             </nav>
 
-        </div>
     )
 }

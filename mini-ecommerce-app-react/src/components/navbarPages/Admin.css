@@ -1,7 +1,7 @@
 .admin-container {
     max-width: 900px;
     padding: 32px;
-   background-color: #ffffff63;
+    background-color: #ffffff63;
     border-radius: 18px;
     box-shadow: 0 6px 32px rgba(80, 120, 200, 0.10);
 }
@@ -15,7 +15,7 @@
 }
 
 .admin-form-section {
-   background-color: #ffffff63;
+    background-color: #ffffff63;
     border-radius: 12px;
     padding: 24px 32px;
     box-shadow: 0 2px 12px rgba(80, 120, 200, 0.07);
@@ -65,7 +65,7 @@
 }
 
 .admin-table-section {
-      background-color: #ffffff63;
+    background-color: #ffffff63;
     border-radius: 12px;
     padding: 24px 32px;
     box-shadow: 0 2px 12px rgba(80, 120, 200, 0.07);
@@ -86,7 +86,8 @@
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.admin-table th, .admin-table td {
+.admin-table th,
+.admin-table td {
     padding: 1rem;
     text-align: left;
 }
@@ -126,18 +127,29 @@
     animation: spin 1s linear infinite;
     display: block;
 }
+
 @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 700px) {
     .admin-container, .admin-form-section, .admin-table-section {
-        padding: 12px;
+        padding: 22px;
     }
     .admin-form {
         flex-direction: column;
         gap: 10px;
+    }
+    .admin-form input {
+        flex: 1 1 auto; 
+        width: 100%;   
+        box-sizing: border-box;
     }
     .admin-table th, .admin-table td {
         padding: 0.7rem;

@@ -1,17 +1,17 @@
 .App {
   text-align: center;
-    margin-top: 80px; /* Ajusta según la altura de tu navbar */
+   margin-top: 80px;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #001e3ae3;
+  background-color: #001727e3;
   background-size: 400% 400%;
   animation: gradientShift 25s ease infinite;
   font-family: 'Orbitron', sans-serif;
   color: white;
-  min-height: 100vh;
+
 }
 
 @keyframes gradientShift {

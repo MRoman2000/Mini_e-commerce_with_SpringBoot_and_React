@@ -10,11 +10,9 @@
   padding: 1rem 2rem;
   background: rgba(0, 0, 0, 0.452);
   backdrop-filter: blur(10px);
-  /* Desenfoque */
-  -webkit-backdrop-filter: blur(5px);
-  /* Compatibilidad Safari */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  /* NO poner overflow-x aquí para desktop */
 }
 
 .nav-list {
@@ -25,8 +23,6 @@
   padding: 0;
 }
 
-
-
 .nav-link.active {
   font-weight: 600;
   border-radius: 15px;
@@ -35,11 +31,10 @@
   border-bottom: 1px solid rgb(0, 87, 158);
 }
 
-
 .nav-list li {
   transition: all 0.3s ease;
   border-radius: 15px;
-
+  flex: 0 0 auto; /* importante para que no se encojan y se pueda scrollear */
 }
 
 .nav-list li a {
@@ -58,11 +53,23 @@
   border-bottom: 2px solid rgb(0, 59, 107);
 }
 
-
 @media (max-width: 600px) {
+  .nav-bar {
+    padding-left: 1rem;      /* menos padding a la izquierda */
+    padding-right: 0;        /* quitar padding a la derecha para no cortar */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+  }
+
   .nav-list {
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+    flex-wrap: nowrap;
+    width: max-content;
+    overflow-x: auto;
+    padding-right: 2rem;     /* espacio extra para el scroll final */
+  }
+
+  .nav-list::-webkit-scrollbar {
+    display: none;
   }
 }

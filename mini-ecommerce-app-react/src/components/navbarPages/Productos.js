@@ -1,56 +1,65 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getProductos } from '../../service/ProductosService';
 import { useCart } from '../../context/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { buscarProducto } from '../../service/ProductosService';
 import { FaHeart } from 'react-icons/fa';
 import './Productos.css';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Productos() {
-    //  const [productos, setProductos] = useState([]);
     const { addToCart, addTowishlist } = useCart();
-    const [query, setQuery] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [query, setQuery] = useState(searchParams.get('search') || '');
     const [searchResults, setSearchResults] = useState(null);
-    /*   useEffect(() => {
-           console.log('Componente Productos montado y ejecutando fetch');
-           obtenerProductos();
-       }, []); */
-
 
     const { data: productos, error, isLoading } = useQuery({
         queryKey: ['productos'],
         queryFn: getProductos,
         staleTime: 1000 * 60 * 5,
-        refetchOnWindowFocus: false, // no vuelve a pedir al cambiar de ventana
+        refetchOnWindowFocus: false,
     });
 
-    const handleSearch = async (e) => {
+    // Búsqueda que se ejecuta solo cuando pulsas el botón o Enter
+    const handleSearch = async () => {
+        if (query.trim() === '') {
+            setSearchResults(null);
+            setSearchParams({});
+            return;
+        }
+        setSearchParams({ search: query });
         try {
-            if (query.trim() === "") {
-                setSearchResults(null);
-                return;
-            }
             const resultado = await buscarProducto(query);
             setSearchResults(resultado);
         } catch (error) {
             console.error('Error buscando producto:', error.message);
         }
-    }
+    };
 
+    // Cuando el componente monta, si hay query en la URL, hace la búsqueda inicial
+    useEffect(() => {
+        const q = searchParams.get('search');
+        if (q && q.trim() !== '') {
+            setQuery(q);
+            (async () => {
+                try {
+                    const resultado = await buscarProducto(q);
+                    setSearchResults(resultado);
+                } catch (error) {
+                    console.error('Error buscando producto:', error.message);
+                }
+            })();
+        } else {
+            setSearchResults(null);
+            setQuery('');
+        }
+    }, [searchParams]);
 
     if (isLoading) return <p>Cargando productos...</p>;
     if (error) return <p>Error al cargar productos</p>;
-    /*  const obtenerProductos = async () => {
-          try {
-              const productos = await getProductos();
-              setProductos(productos);
-              console.log("Productos obtenidos:", productos);
-          } catch (error) {
-              console.error("Error al obtener los productos:", error);
-          }
-      } */
 
     const productosAMostrar = searchResults !== null ? searchResults : productos;
+
     return (
         <div className='container'>
             <h1>Lista de Productos</h1>
@@ -62,6 +71,7 @@ export default function Productos() {
                     className='search-input'
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
                 />
                 <button className='search-button' onClick={handleSearch}>Buscar</button>
             </div>
@@ -87,7 +97,6 @@ export default function Productos() {
                                         <FaHeart size={20} className="icono-corazon" />
                                     </button>
                                 </div>
-
                             </li>
                         ))}
                     </ul>
@@ -100,5 +109,5 @@ export default function Productos() {
                 )}
             </div>
         </div>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { mostrarListaDeseos } from '../../service/WishlistService';
 import { eliminarProductoDeLista } from '../../service/WishlistService';
 import { FaTrash } from 'react-icons/fa'
