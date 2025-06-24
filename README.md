@@ -36,3 +36,13 @@ Incluye autenticación segura con JWT (Access Token y Refresh Token), gestión d
    ```bash
    mvn clean install
    mvn spring-boot:run
+
+---
+
+## Vista previa
+
+![image](https://github.com/user-attachments/assets/078523b0-51b5-4dcb-b941-432c7131852d)
+![image](https://github.com/user-attachments/assets/23d25fb8-04a6-4ede-8f52-97bf5457b715)
+![image](https://github.com/user-attachments/assets/c32148e4-f383-424b-a2dc-8d1bb727680e)
+
+
